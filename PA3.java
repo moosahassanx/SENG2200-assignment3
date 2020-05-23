@@ -7,21 +7,19 @@
 
 // importing java libraries (file scanner and string output)
 import java.io.*;
-import java.util.Scanner;
 
-class PA2{
+class PA3{
     public static void main(final String[] args) throws IOException
     {
         Controller controller;
+        int m, n, qMax;
 
-        Scanner Console = new Scanner(System.in);       // EXECUTE: java PA3 [M] [N] [Qmax]
-        double m, n;
-        System.out.print("Enter m: ");
-        m = Console.nextDouble();
-        System.out.print("Enter n: ");
-        n = Console.nextDouble();
+        m = Integer.parseInt(args[0]);
+        n = Integer.parseInt(args[1]);
+        qMax = Integer.parseInt(args[2]);
 
-        controller = new Controller(m, n, maxQ);
+        controller = new Controller(m, n, qMax);
+        controller.run();
 	}
 }
 
