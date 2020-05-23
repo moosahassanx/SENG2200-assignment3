@@ -12,12 +12,16 @@ import java.util.Scanner;
 class PA2{
     public static void main(final String[] args) throws IOException
     {
+        Controller controller;
+
         Scanner Console = new Scanner(System.in);       // EXECUTE: java PA3 [M] [N] [Qmax]
-        String name;
-        System.out.print("Enter name: ");
-        name = Console.nextLine();
-        System.out.println("Name = " + name);
-        Console.close();
+        double m, n;
+        System.out.print("Enter m: ");
+        m = Console.nextDouble();
+        System.out.print("Enter n: ");
+        n = Console.nextDouble();
+
+        controller = new Controller(m, n, maxQ);
 	}
 }
 
