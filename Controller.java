@@ -1,18 +1,26 @@
+import java.util.Random;
+
 public class Controller {
     private int averageTime;
     private int timeRange;
     private int Qmax;
-    Stage S0a;
-    Stage S3a;
-    Stage S3b;
-    Stage S5a;
-    Stage S5b;
+    private Stage S0a, S3a, S3b, S5a, S5b;      // 2M, 2N
+    private Stage S0b, S1, S2, S4, S6;          // 1M, 1N
+    private Item[] car;
+    private double processingTime;
+    private double d;       // random number between 0 and 1
 
 
     public Controller(int m, int n, int qMax){
         averageTime = m;
         timeRange = n;
         Qmax = qMax;
+        car = new Item[10000];
+        Random r = new Random();
+        d = r.nextDouble();           // assigning value instead of having it be random TEMPORARY
+        
+        // P = M + N × (d − 0.5).
+        processingTime = (d-0.5) * timeRange + averageTime;
     }
 
     public void run(){
@@ -21,5 +29,9 @@ public class Controller {
         System.out.println("Qmax: " + Qmax);
 
         
+
+        System.out.println("Production Stations:\n--------------------------------");
+        System.out.println("Stage:\tWork[%]\Starve[t]\tBlock[t]");
+        System.out.println(S0a.toString());
     }
 }

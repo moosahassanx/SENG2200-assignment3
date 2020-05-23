@@ -7,10 +7,12 @@
 
 // importing java libraries (file scanner and string output)
 import java.io.*;
+import java.util.Scanner;
 
 class PA3{
     public static void main(final String[] args) throws IOException
     {
+        Scanner Console = new Scanner(System.in);
         Controller controller;
         int m, n, qMax;
 
@@ -18,8 +20,16 @@ class PA3{
         n = Integer.parseInt(args[1]);
         qMax = Integer.parseInt(args[2]);
 
+        // • The inter-stage storage capacities (Qmax) will be always greater than 1.
+        while(qMax < 1){
+            System.out.println("ERROR: Qmax input must be greater than 1.");
+            System.out.print("QMax value: ");
+            qMax = Console.nextInt();
+        }
+
         controller = new Controller(m, n, qMax);
         controller.run();
+        Console.close();
 	}
 }
 
