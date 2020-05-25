@@ -14,13 +14,16 @@ public class Stage {
 
     // T2 = T1 + P.
     public double processingTime(double p){
-        timeFinish = timeStart + p;
+        // timeFinish = timeStart + p;
+        return 2.3;
     }
     
     public String toString(){
         String printer = "";
 
         printer += "";
+
+        return printer;
     }
 
     // TODO: 5. You will also keep a total number of items created by S0a and S0b that arrive at the end of the line.

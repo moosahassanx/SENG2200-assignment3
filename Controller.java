@@ -28,10 +28,8 @@ public class Controller {
         System.out.println("N: " + timeRange);
         System.out.println("Qmax: " + Qmax);
 
-        
-
         System.out.println("Production Stations:\n--------------------------------");
-        System.out.println("Stage:\tWork[%]\Starve[t]\tBlock[t]");
+        System.out.println("Stage\t\tWork[%]\t\tStarve[t]\tBlock[t]");
         System.out.println(S0a.toString());
     }
 }
