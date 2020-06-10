@@ -23,9 +23,9 @@ public class Stage {
     
     // fake toString() method
     public String toString(){
-        String printer = "";
+        String printer = "";  
 
-        printer += name + "\t\t" + "99.87%" + "\t\t" + "4,672.64" + "\t" + "48,409.24" + "\n";
+        printer += name + "\t\t" + "0%" + "\t\t" + "00000.00" + "\t" + "00000.00" + "\n";
 
         return printer;
     }

@@ -1,6 +1,12 @@
 public class InterstageStorage {
-    public InterstageStorage(){
-        // 
+    private String name;
+    private double averageTime;
+    private double averageItems;
+
+    public InterstageStorage(String n){
+        name = n;
+        averageTime = 0;
+        averageItems = 0;
     }
 
     // TODO: a. the average time an item spends in each queue 
@@ -19,5 +25,14 @@ public class InterstageStorage {
         numberOfItems = 4;
 
         return numberOfItems;
+    }
+
+    // fake output
+    public String toString(){
+        String output = "";
+
+        output += name + "\t\t" + averageTime + "\t\t\t" + averageItems + "\n";
+
+        return output;
     }
 }
