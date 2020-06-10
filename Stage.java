@@ -1,15 +1,18 @@
 public class Stage {
-    private String test;
     private double timeStart;
     private double timeFinish;
+    private String name;
 
-    // constructor
+    // default constructor
     public Stage(){
-        test = "";
+        timeStart = 0;
+        timeFinish = 0;
+        name = "";
     }
 
-    public void setTest(String t){
-        test = t;
+    // main constructor
+    public Stage(String n){
+        name = n;
     }
 
     // T2 = T1 + P.
@@ -18,10 +21,11 @@ public class Stage {
         return 2.3;
     }
     
+    // fake toString() method
     public String toString(){
         String printer = "";
 
-        printer += "";
+        printer += name + "\t\t" + "99.87%" + "\t\t" + "4,672.64" + "\t" + "48,409.24" + "\n";
 
         return printer;
     }

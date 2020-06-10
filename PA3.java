@@ -28,7 +28,13 @@ class PA3{
         }
 
         controller = new Controller(m, n, qMax);
+
+        // running the controller
         controller.run();
+
+        // outputting the results
+        System.out.println(controller.toString());
+
         Console.close();
 	}
 }
