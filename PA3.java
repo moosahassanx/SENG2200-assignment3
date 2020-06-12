@@ -7,6 +7,7 @@
 
 // importing java libraries (file scanner and string output)
 import java.io.*;
+import java.util.Random;
 import java.util.Scanner;
 
 class PA3{
@@ -22,8 +23,16 @@ class PA3{
 
         // • The inter-stage storage capacities (Qmax) will be always greater than 1.
         while(qMax < 1){
+
+            Item[] itemArray = new Item[10];
+            for(int i = 0; i < 10; i++){
+                itemArray[i] = new Item();
+            }
+
+            System.out.println("*****************************************");
+            
             System.out.println("ERROR: Qmax input must be greater than 1.");
-            System.out.print("QMax value: ");
+            System.out.print("Re-input QMax value: ");
             qMax = Console.nextInt();
         }
 

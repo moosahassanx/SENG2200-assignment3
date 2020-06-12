@@ -18,10 +18,7 @@ public class Controller {
         averageTime = m;
         timeRange = n;
         Qmax = qMax;
-        car = new Item[10000];
-        Random r = new Random();
-        d = r.nextDouble();           // assigning value instead of having it be random TEMPORARY
-        
+        car = new Item[10000];        
         // P = M + N × (d − 0.5).
         processingTime = (d-0.5) * timeRange + averageTime;
     }
