@@ -7,47 +7,33 @@
 
 // importing java libraries (file scanner and string output)
 import java.io.*;
-import java.util.Random;
 import java.util.Scanner;
 
 class PA3{
-    public static void main(final String[] args) throws IOException
-    {
+    public static void main(final String[] args) throws IOException{
+        // declaring variables and user input scanner
         Scanner Console = new Scanner(System.in);
         Controller controller;
         int m, n, qMax;
 
+        // taking in data from user
         m = Integer.parseInt(args[0]);
         n = Integer.parseInt(args[1]);
         qMax = Integer.parseInt(args[2]);
+        Console.close();
 
         // • The inter-stage storage capacities (Qmax) will be always greater than 1.
         while(qMax < 1){
-
-            // how to make item arrays
-            /*
-            Item[] itemArray = new Item[10];
-            for(int i = 0; i < 10; i++){
-                itemArray[i] = new Item();
-            }
-            */
-
-            System.out.println("*****************************************");
-            
             System.out.println("ERROR: Qmax input must be greater than 1.");
-            System.out.print("Re-input QMax value: ");
-            qMax = Console.nextInt();
+            return;
         }
 
+        // sending information to controller
         controller = new Controller(m, n, qMax);
-
-        // running the controller
         controller.run();
 
-        // outputting the results
+        // outputting results
         System.out.println(controller.toString());
-
-        Console.close();
 	}
 }
 

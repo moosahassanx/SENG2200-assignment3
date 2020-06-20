@@ -1,5 +1,10 @@
 import java.util.Random;
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Scanner;
+import java.lang.Thread;
+
 public class Controller {
     private int averageTime;
     private int timeRange;
@@ -7,10 +12,10 @@ public class Controller {
     private InterstageStorage Q01, Q12, Q23, Q34, Q45, Q56;
     private Stage S3a, S3b, S5a, S5b;                           // 2M, 2N
     private Stage S1, S2, S4, S6;                               // 1M, 1N
+    private double timeLimit = 10000000;
 
     private BeginningStage S0a, S0b;        // S0a: 2M, 2N      S0b: 1M, 1N
 
-    private Item[] car;
     private double processingTime;
     private double d;       // random number between 0 and 1
 
@@ -18,7 +23,6 @@ public class Controller {
         averageTime = m;
         timeRange = n;
         Qmax = qMax;
-        car = new Item[10000];        
         // P = M + N × (d − 0.5).
         processingTime = (d-0.5) * timeRange + averageTime;
     }
@@ -36,6 +40,7 @@ public class Controller {
         String beginA = "a";
         String beginB = "b";
 
+        // generating amount of items to be made for which beginning stage
         for(int i = 0; i < 100; i++){
             double AorB = r.nextDouble();
 

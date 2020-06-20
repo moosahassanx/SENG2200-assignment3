@@ -28,17 +28,40 @@ public class BeginningStage {
         for(int i = 0; i < numberOfItems; i++){
             car = new Item(AorB);
         }
-
-        nextQueue;
     }
 
-    // fake toString() method
+    public void ProcessItem(){
+        System.out.println("ProcessItem() called");
+    }
+
+    public void FinishItem(){
+        System.out.println("FinishItem() called");
+    }
+
     public String toString(){
         String printer = "";  
 
-        //      stage name          work[%]             starve[t]           block[t]
-        printer += name + "\t\t" + "00.00%" + "\t\t" + "0,000.00" + "\t" + "00,000.00" + "\n";
+        //      stage name          work[%]              starve[t]           block[t]
+        printer += name + "\t\t" + getWork() + "\t\t" + getStarve() + "\t" + getBlock() + "\n";
 
         return printer;
+    }
+
+    public String getWork(){
+        String work = "00.00%";
+
+        return work;
+    }
+
+    public String getStarve(){
+        String starve = "0,000.00";
+
+        return starve;
+    }
+
+    public String getBlock(){
+        String block = "00,000.00";
+
+        return block;
     }
 }
