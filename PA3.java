@@ -24,10 +24,13 @@ class PA3{
         // • The inter-stage storage capacities (Qmax) will be always greater than 1.
         while(qMax < 1){
 
+            // how to make item arrays
+            /*
             Item[] itemArray = new Item[10];
             for(int i = 0; i < 10; i++){
                 itemArray[i] = new Item();
             }
+            */
 
             System.out.println("*****************************************");
             

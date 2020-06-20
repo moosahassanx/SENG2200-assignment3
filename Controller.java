@@ -29,12 +29,33 @@ public class Controller {
         System.out.println("Qmax: " + Qmax);
         System.out.println();
 
+        // generating item numbers
+        Random r = new Random();
+        int a = 0;
+        int b = 0;
+        String beginA = "a";
+        String beginB = "b";
+
+        for(int i = 0; i < 100; i++){
+            double AorB = r.nextDouble();
+
+            if(AorB < 0.5){
+                a++;
+            }
+            
+            else{
+                b++;
+            }
+        }
+
         // lineup
-        S0a = new BeginningStage("S0a", averageTime*2, timeRange*2);
-        S0b = new BeginningStage("S0b", averageTime, timeRange);
+        S0a = new BeginningStage("S0a", averageTime*2, timeRange*2, a, beginA);
+        S0b = new BeginningStage("S0b", averageTime, timeRange, b, beginB);
+        
         Q01 = new InterstageStorage("Q01");
 
         S1 = new Stage("S1");
+        /*
         Q12 = new InterstageStorage("Q12");
 
         S2 = new Stage("S2");
@@ -52,6 +73,7 @@ public class Controller {
         Q56 = new InterstageStorage("Q56");
 
         S6 = new Stage("S6");
+        */
     }
 
     public String toString(){
@@ -62,22 +84,27 @@ public class Controller {
         output += S0a.toString();
         output += S0b.toString();
         output += S1.toString();
+        /*
         output += S2.toString();
         output += S3a.toString();
         output += S3b.toString();
         output += S4.toString();
         output += S5a.toString();
         output += S5b.toString();
+        */
         output += "\n";
+        
 
         output += "Storage Queues:\n----------------------------------------------------\n";
         output += "Store\t\tAvgTime[t]\t\tAvgItems\n";
         output += Q01.toString();
+        /*
         output += Q12.toString();
         output += Q23.toString();
         output += Q34.toString();
         output += Q45.toString();
         output += Q56.toString();
+        */
         output += "\n\n";
 
         output += "Production Paths:\n------------------\n";
