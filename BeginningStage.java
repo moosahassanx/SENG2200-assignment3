@@ -6,6 +6,7 @@ public class BeginningStage {
     private int range;
 
     private Item car;
+    private int numberOfItems;
 
     // default constructor
     public BeginningStage(){
@@ -16,10 +17,15 @@ public class BeginningStage {
     }
 
     // main constructor
-    public BeginningStage(String n, int m, int r){
+    public BeginningStage(String n, int m, int r, int amount, String AorB){
         name = n;
         mean = m;
         range = r;
+        numberOfItems = amount;
+
+        for(int i = 0; i < numberOfItems; i++){
+            car = new Item(AorB);
+        }
     }
 
     // fake toString() method
@@ -27,7 +33,7 @@ public class BeginningStage {
         String printer = "";  
 
         //      stage name          work[%]             starve[t]           block[t]
-        printer += name + "\t\t" + "99.87%" + "\t\t" + "4,672.64" + "\t" + "48,409.24" + "\n";
+        printer += name + "\t\t" + "00.00%" + "\t\t" + "0,000.00" + "\t" + "00,000.00" + "\n";
 
         return printer;
     }
