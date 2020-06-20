@@ -30,8 +30,8 @@ public class Controller {
         System.out.println();
 
         // lineup
-        S0a = new BeginningStage("S0a");
-        S0b = new BeginningStage("S0b");
+        S0a = new BeginningStage("S0a", averageTime*2, timeRange*2);
+        S0b = new BeginningStage("S0b", averageTime, timeRange);
         Q01 = new InterstageStorage("Q01");
 
         S1 = new Stage("S1");
@@ -50,6 +50,8 @@ public class Controller {
         S5a = new Stage("S5a");
         S5b = new Stage("S5b");
         Q56 = new InterstageStorage("Q56");
+
+        S6 = new Stage("S6");
     }
 
     public String toString(){

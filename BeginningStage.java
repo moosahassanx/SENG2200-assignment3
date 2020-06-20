@@ -2,6 +2,8 @@ public class BeginningStage {
     private double timeStart;
     private double timeFinish;
     private String name;
+    private int mean;
+    private int range;
 
     private Item car;
 
@@ -14,8 +16,10 @@ public class BeginningStage {
     }
 
     // main constructor
-    public BeginningStage(String n){
+    public BeginningStage(String n, int m, int r){
         name = n;
+        mean = m;
+        range = r;
     }
 
     // fake toString() method
