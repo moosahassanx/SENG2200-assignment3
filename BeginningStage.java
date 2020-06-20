@@ -8,6 +8,8 @@ public class BeginningStage {
     private Item car;
     private int numberOfItems;
 
+    private String nextQueue;
+
     // default constructor
     public BeginningStage(){
         timeStart = 0;
@@ -26,6 +28,8 @@ public class BeginningStage {
         for(int i = 0; i < numberOfItems; i++){
             car = new Item(AorB);
         }
+
+        nextQueue;
     }
 
     // fake toString() method
