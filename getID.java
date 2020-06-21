@@ -1,27 +1,53 @@
-// TAKEN FROM https://www.geeksforgeeks.org/singleton-class-java/ NEEDS TO BE CHANGED TO FIT ASSIGNMENT **************************
-// THIS CLASS WILL NEED TO RETURN A UNIQUE STRING ID FOR THE ITEMS IN THIS PROGRAM
+import java.util.Random;
 
 // Java program implementing Singleton class with getInstance() method 
-public class getID 
-{ 
+public class getID{ 
+    /*
     // static variable single_instance of type Singleton 
     private static getID single_instance = null; 
   
     // variable of type String 
-    public String s; 
+    public String ID; 
   
     // private constructor restricted to this class itself 
-    private getID() 
-    { 
-        s = "Hello I am a string part of Singleton class"; 
+    private getID(){
+        Random r = new Random();
+
+        this.ID = "";
+        int rng = r.nextInt(10);
+        this.ID = String.valueOf(rng);
+
+        for(int j = 0; j < 9; j++){
+            rng = r.nextInt(10);
+            this.ID += String.valueOf(rng);
+        }
     } 
   
     // static method to create instance of Singleton class 
-    public static getID getInstance() 
-    { 
-        if (single_instance == null) 
-            single_instance = new getID(); 
+    public static getID getInstance(){ 
+        if (single_instance == null)
+            single_instance = new getID();
   
         return single_instance; 
     } 
+    */
+
+    private String ID;
+
+    public getID(){
+        Random r = new Random();
+
+        this.ID = "";
+        int rng = r.nextInt(10);
+        this.ID = String.valueOf(rng);
+
+        for(int j = 0; j < 9; j++){
+            rng = r.nextInt(10);
+            this.ID += String.valueOf(rng);
+        }
+    }
+
+    public String retrieveID(){
+        return this.ID;
+    }
 } 

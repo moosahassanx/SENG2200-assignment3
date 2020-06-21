@@ -9,17 +9,28 @@ public class Item {
     public Item(){
         timeEntered = 0;
         timeLeft = 0;
-        uniqueID = "";
+        /*
+        // generating id using singleton class
+        getID generateID = getID.getInstance();
+        uniqueID = generateID.ID;
+        */
+
+        getID generateID = new getID();
+        uniqueID = generateID.retrieveID();
     }
     
     public Item(String AorB)
     {
-        uniqueID = "ITEMID" + AorB;
-        
+        timeEntered = 0;
+        timeLeft = 0;
         /*
-        char startPoint = uniqueID.charAt(6);
-        System.out.println("startPoint: " + startPoint);
+        // generating id using singleton class
+        getID generateID = getID.getInstance();
+        uniqueID = generateID.ID + AorB;
         */
+
+        getID generateID = new getID();
+        uniqueID = generateID.retrieveID();
     }
 
     public void newData(String s, double tE, double tL) {

@@ -9,22 +9,24 @@ public class Controller {
     private int averageTime;
     private int timeRange;
     private int Qmax;
+
+    private ArrayList<Stage> stageList;
+    private ArrayList<InterstageStorage> interstageStorageList;
+    
     private InterstageStorage Q01, Q12, Q23, Q34, Q45, Q56;
     private Stage S3a, S3b, S5a, S5b;                           // 2M, 2N
     private Stage S1, S2, S4, S6;                               // 1M, 1N
+    
     private double timeLimit = 10000000;
 
     private BeginningStage S0a, S0b;        // S0a: 2M, 2N      S0b: 1M, 1N
 
-    private double processingTime;
     private double d;       // random number between 0 and 1
 
     public Controller(int m, int n, int qMax){
         averageTime = m;
         timeRange = n;
         Qmax = qMax;
-        // P = M + N × (d − 0.5).
-        processingTime = (d-0.5) * timeRange + averageTime;
     }
 
     public void run(){
