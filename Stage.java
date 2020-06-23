@@ -7,7 +7,7 @@ public abstract class Stage {
     private String name;
 
     private List<Stage> nextStage;
-    protected List<Stage> prevStage;
+    private List<Stage> prevStage;
 
     // default constructor
     public Stage(){

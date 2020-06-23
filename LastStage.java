@@ -36,10 +36,6 @@ public class LastStage extends Stage{
         return name;
     }
 
-    public void setPrev(Stage prev){
-        prevStage.add(prev);
-    }
-
     public void ProcessItem(){
         System.out.println("ProcessItem() called");
     }
