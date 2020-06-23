@@ -14,19 +14,22 @@ public class Controller {
     private ArrayList<InterstageStorage> interstageStorageList;
     
     private InterstageStorage Q01, Q12, Q23, Q34, Q45, Q56;
-    private Stage S3a, S3b, S5a, S5b;                           // 2M, 2N
-    private Stage S1, S2, S4, S6;                               // 1M, 1N
+    private Stage S0b, S3a, S3b, S5a, S5b;                           // 2M, 2N
+    private Stage S0a, S1, S2, S4, S6;                               // 1M, 1N
     
     private double timeLimit = 10000000;
 
-    private BeginningStage S0a, S0b;        // S0a: 2M, 2N      S0b: 1M, 1N
-
     private double d;       // random number between 0 and 1
+
+    private EventManager EventManager;
 
     public Controller(int m, int n, int qMax){
         averageTime = m;
         timeRange = n;
         Qmax = qMax;
+        stageList = new ArrayList<Stage>();
+        interstageStorageList = new ArrayList<InterstageStorage>();
+        EventManager = new EventManager();
     }
 
     public void run(){
@@ -42,6 +45,7 @@ public class Controller {
         String beginA = "a";
         String beginB = "b";
 
+        /*
         // generating amount of items to be made for which beginning stage
         for(int i = 0; i < 100; i++){
             double AorB = r.nextDouble();
@@ -54,36 +58,105 @@ public class Controller {
                 b++;
             }
         }
+        */
+
+        // making interstage storages
+        Q01 = new InterstageStorage("Q01", Qmax);
+        Q12 = new InterstageStorage("Q12", Qmax);
+        Q23 = new InterstageStorage("Q23", Qmax);
+        Q34 = new InterstageStorage("Q34", Qmax);
+        Q45 = new InterstageStorage("Q45", Qmax);
+        Q56 = new InterstageStorage("Q56", Qmax);
+
+        // adding to storage lists
+        interstageStorageList.add(Q01);         // HOJU DOES THIS IDK WHY BUT IM FINNA PEEP THIS OUT LATER
+        interstageStorageList.add(Q12);
+        interstageStorageList.add(Q23);
+        interstageStorageList.add(Q34);
+        interstageStorageList.add(Q45);
+        interstageStorageList.add(Q56);
 
         // lineup
-        S0a = new BeginningStage("S0a", averageTime*2, timeRange*2, a, beginA);
+        S0a = new BeginningStage("S0a", averageTime*2, timeRange*2, a, beginA);     // 2M, 2N
         S0b = new BeginningStage("S0b", averageTime, timeRange, b, beginB);
+        S1 = new MiddleStage("S1", averageTime, timeRange);
+        S2 = new MiddleStage("S2", averageTime, timeRange);
+        S3a = new MiddleStage("S3a", averageTime*2, timeRange*2);
+        S3b = new MiddleStage("S3b", averageTime*2, timeRange*2);
+        S4 = new MiddleStage("S4", averageTime, timeRange);
+        S5a = new MiddleStage("S5a", averageTime*2, timeRange*2);
+        S5b = new MiddleStage("S5b", averageTime*2, timeRange*2);
+        S6 = new LastStage("S6", averageTime, timeRange);
+
+        // linking all the stages using java linked lists
+        S0a.setNext(S1);
+        S0b.setNext(S1);
+
+        S1.setPrev(S0a);
+        S1.setPrev(S0b);
+        S1.setNext(S2);
+
+        S2.setPrev(S1);
+        S2.setNext(S3a);
+        S2.setPrev(S3b);
         
-        Q01 = new InterstageStorage("Q01");
+        S3a.setPrev(S2);
+        S3a.setNext(S4);
 
-        S1 = new Stage("S1");
-        /*
-        Q12 = new InterstageStorage("Q12");
+        S3b.setPrev(S2);
+        S3b.setNext(S4);
 
-        S2 = new Stage("S2");
-        Q23 = new InterstageStorage("Q23");
+        S4.setPrev(S3b);
+        S4.setPrev(S3a);
+        S4.setNext(S5a);
+        S4.setNext(S5b);
 
-        S3a = new Stage("S3a");
-        S3b = new Stage("S3b");
-        Q34 = new InterstageStorage("Q34");
+        S5a.setPrev(S4);
+        S5a.setNext(S6);
+        
+        S5b.setPrev(S4);
+        S5b.setNext(S6);
 
-        S4 = new Stage("S4");
-        Q45 = new InterstageStorage("Q45");
+        // adding to stage arraylist
+        stageList.add(S0a);
+        stageList.add(S0b);
+        stageList.add(S1);
+        stageList.add(S2);
+        stageList.add(S3a);
+        stageList.add(S3b);
+        stageList.add(S4);
+        stageList.add(S5a);
+        stageList.add(S5b);
+        stageList.add(S6);
 
-        S5a = new Stage("S5a");
-        S5b = new Stage("S5b");
-        Q56 = new InterstageStorage("Q56");
+        Stage stageFinished;
 
-        S6 = new Stage("S6");
-        */
+        // the main simulation loop
+        while(EventManager.timeNow() < timeLimit){
+
+            // process at this time
+            for(Stage s : stageList){
+                s.ProcessItem(EventManager.timeNow());
+            }
+
+            // finish the phase
+            stageFinished = EventManager.performNextProduction();
+
+            // update state of stage
+            for(Stage p : stageList){
+                if(p != stageFinished){
+                    p.incStateDur(EventManager.timeNow());
+                }
+            }
+
+            // stamp average items
+            for(InterstageStorage q: interstageStorageList){
+                q.stampCount();
+            }
+        }
     }
 
-    public String toString(){
+    public String toString() {
         String output = "";
 
         output += "Production Stations:\n---------------------------------------------------------\n";

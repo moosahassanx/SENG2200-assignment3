@@ -1,12 +1,22 @@
+import java.util.LinkedList;
+import java.util.List;
+
 public class InterstageStorage {
     private String name;
     private double averageTime;
     private double averageItems;
+    private int Qmax;
 
-    public InterstageStorage(String n){
+    private int count;                  // counts the cmoun
+    private List<Integer> countStamp;
+
+    public InterstageStorage(String n, int q){
         name = n;
         averageTime = 0;
         averageItems = 0;
+        Qmax = q;
+        countStamp = new LinkedList<Integer>();
+        count = 0;
     }
 
     // TODO: a. the average time an item spends in each queue 
@@ -35,4 +45,8 @@ public class InterstageStorage {
 
         return output;
     }
+
+	public void stampCount() {
+        countStamp.add(new Integer(count));
+	}
 }

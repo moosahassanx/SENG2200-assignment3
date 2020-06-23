@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.List;
 
-public class BeginningStage extends Stage{
+public class MiddleStage extends Stage{
     private double timeStart;
     private double timeFinish;
     private String name;
@@ -13,33 +13,39 @@ public class BeginningStage extends Stage{
 
     private String nextQueue;
 
-    protected List<Stage> nextStage;
+    private List<Stage> prevStage;
+    private List<Stage> nextStage;
 
     // default constructor
-    public BeginningStage(){
+    public MiddleStage(){
         timeStart = 0;
         timeFinish = 0;
         name = "";
         car = new Item();
+        prevStage = new LinkedList<Stage>();
         nextStage = new LinkedList<Stage>();
     }
 
     // main constructor
-    public BeginningStage(String n, int m, int r, int amount, String AorB){
+    public MiddleStage(String n, int m, int r){
         name = n;
         mean = m;
         range = r;
-        numberOfItems = amount;
 
-        for(int i = 0; i < numberOfItems; i++){
-            car = new Item(AorB);
-        }
-
+        prevStage = new LinkedList<Stage>();
         nextStage = new LinkedList<Stage>();
     }
 
     public void setNext(Stage after){
         nextStage.add(after);
+    }
+
+    public void setPrev(Stage before){
+        prevStage.add(before);
+    }
+
+    public void ProcessItem(){
+        System.out.println("ProcessItem() called");
     }
 
     public void FinishItem(){
