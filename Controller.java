@@ -98,7 +98,7 @@ public class Controller {
 
         S2.setPrev(S1);
         S2.setNext(S3a);
-        S2.setPrev(S3b);
+        S2.setNext(S3b);
         
         S3a.setPrev(S2);
         S3a.setNext(S4);
@@ -106,8 +106,8 @@ public class Controller {
         S3b.setPrev(S2);
         S3b.setNext(S4);
 
-        S4.setPrev(S3b);
         S4.setPrev(S3a);
+        S4.setPrev(S3b);
         S4.setNext(S5a);
         S4.setNext(S5b);
 
@@ -116,6 +116,9 @@ public class Controller {
         
         S5b.setPrev(S4);
         S5b.setNext(S6);
+
+        S6.setPrev(S5a);
+        S6.setPrev(S5b);
 
         // adding to stage arraylist
         stageList.add(S0a);
@@ -128,32 +131,6 @@ public class Controller {
         stageList.add(S5a);
         stageList.add(S5b);
         stageList.add(S6);
-
-        Stage stageFinished;
-
-        // the main simulation loop
-        while(EventManager.timeNow() < timeLimit){
-
-            // process at this time
-            for(Stage s : stageList){
-                s.ProcessItem(EventManager.timeNow());
-            }
-
-            // finish the phase
-            stageFinished = EventManager.performNextProduction();
-
-            // update state of stage
-            for(Stage p : stageList){
-                if(p != stageFinished){
-                    p.incStateDur(EventManager.timeNow());
-                }
-            }
-
-            // stamp average items
-            for(InterstageStorage q: interstageStorageList){
-                q.stampCount();
-            }
-        }
     }
 
     public String toString() {

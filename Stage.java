@@ -14,6 +14,9 @@ public abstract class Stage {
         timeStart = 0;
         timeFinish = 0;
         name = "";
+
+        nextStage = new LinkedList<Stage>();
+        prevStage = new LinkedList<Stage>();
     }
 
     // main constructor
@@ -23,6 +26,14 @@ public abstract class Stage {
         name = n;
         nextStage = new LinkedList<Stage>();
         prevStage = new LinkedList<Stage>();
+    }
+
+    public void setName(String n){
+        name = n;
+    }
+
+    public String getName(){
+        return name;
     }
 
     // T2 = T1 + P.
@@ -47,9 +58,27 @@ public abstract class Stage {
     public void setNext(Stage after){
         nextStage.add(after);
     }
-
+    public int getNextSize(){
+        return nextStage.size();
+    }
+    public Stage getNext(){
+        return nextStage.get(0);
+    }
+    public Stage getNext2(){
+        return nextStage.get(1);
+    }
+    
     public void setPrev(Stage before){
         prevStage.add(before);
+    }
+    public int getPrevSize(){
+        return prevStage.size();
+    }
+    public Stage getPrev(){
+        return prevStage.get(0);
+    }
+    public Stage getPrev2(){
+        return prevStage.get(1);
     }
 
     // TODO: 5. You will also keep a total number of items created by S0a and S0b that arrive at the end of the line.

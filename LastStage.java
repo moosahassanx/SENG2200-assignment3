@@ -13,15 +13,12 @@ public class LastStage extends Stage{
 
     private String nextQueue;
 
-    private List<Stage> prevStage;
-
     // default constructor
     public LastStage(){
         timeStart = 0;
         timeFinish = 0;
         name = "";
         car = new Item();
-        prevStage = new LinkedList<Stage>();
     }
 
     // main constructor
@@ -29,6 +26,14 @@ public class LastStage extends Stage{
         name = n;
         mean = m;
         range = r;
+    }
+
+    public void setName(String n){
+        name = n;
+    }
+
+    public String getName(){
+        return name;
     }
 
     public void setPrev(Stage prev){

@@ -13,15 +13,12 @@ public class BeginningStage extends Stage{
 
     private String nextQueue;
 
-    protected List<Stage> nextStage;
-
     // default constructor
     public BeginningStage(){
         timeStart = 0;
         timeFinish = 0;
         name = "";
         car = new Item();
-        nextStage = new LinkedList<Stage>();
     }
 
     // main constructor
@@ -34,12 +31,14 @@ public class BeginningStage extends Stage{
         for(int i = 0; i < numberOfItems; i++){
             car = new Item(AorB);
         }
-
-        nextStage = new LinkedList<Stage>();
     }
 
-    public void setNext(Stage after){
-        nextStage.add(after);
+    public void setName(String n){
+        name = n;
+    }
+
+    public String getName(){
+        return name;
     }
 
     public void FinishItem(){

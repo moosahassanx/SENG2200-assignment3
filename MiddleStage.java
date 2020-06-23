@@ -13,17 +13,12 @@ public class MiddleStage extends Stage{
 
     private String nextQueue;
 
-    private List<Stage> prevStage;
-    private List<Stage> nextStage;
-
     // default constructor
     public MiddleStage(){
         timeStart = 0;
         timeFinish = 0;
         name = "";
         car = new Item();
-        prevStage = new LinkedList<Stage>();
-        nextStage = new LinkedList<Stage>();
     }
 
     // main constructor
@@ -31,17 +26,13 @@ public class MiddleStage extends Stage{
         name = n;
         mean = m;
         range = r;
-
-        prevStage = new LinkedList<Stage>();
-        nextStage = new LinkedList<Stage>();
     }
 
-    public void setNext(Stage after){
-        nextStage.add(after);
+    public void setName(String n){
+        name = n;
     }
-
-    public void setPrev(Stage before){
-        prevStage.add(before);
+    public String getName(){
+        return name;
     }
 
     public void ProcessItem(){
