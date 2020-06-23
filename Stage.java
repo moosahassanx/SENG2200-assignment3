@@ -5,6 +5,7 @@ public abstract class Stage {
     private double timeStart;
     private double timeFinish;
     private String name;
+    private InterstageStorage nextQueue;
 
     private List<Stage> nextStage;
     private List<Stage> prevStage;
@@ -34,6 +35,10 @@ public abstract class Stage {
 
     public String getName(){
         return name;
+    }
+
+    public InterstageStorage getNextQueue(){
+        return nextQueue;
     }
 
     // T2 = T1 + P.

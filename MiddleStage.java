@@ -11,7 +11,7 @@ public class MiddleStage extends Stage{
     private Item car;
     private int numberOfItems;
 
-    private String nextQueue;
+    private InterstageStorage nextQueue;
 
     // default constructor
     public MiddleStage(){
@@ -22,10 +22,12 @@ public class MiddleStage extends Stage{
     }
 
     // main constructor
-    public MiddleStage(String n, int m, int r){
+    public MiddleStage(String n, int m, int r, InterstageStorage q){
         name = n;
         mean = m;
         range = r;
+
+        nextQueue = q;
     }
 
     public void setName(String n){
