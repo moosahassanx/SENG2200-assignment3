@@ -10,7 +10,7 @@ public class EventManager {
 		return currentTime;
 	}
 
-	public Stage performNextProduction() {
+	public Stage produceItem() {
 		return null;
 	}
 }

@@ -69,7 +69,7 @@ public class Controller {
         Q56 = new InterstageStorage("Q56", Qmax);
 
         // adding to storage lists
-        interstageStorageList.add(Q01);         // HOJU DOES THIS IDK WHY BUT IM FINNA PEEP THIS OUT LATER
+        interstageStorageList.add(Q01);
         interstageStorageList.add(Q12);
         interstageStorageList.add(Q23);
         interstageStorageList.add(Q34);
