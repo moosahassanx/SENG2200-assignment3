@@ -15,27 +15,21 @@ public class Item {
         uniqueID = generateID.ID;
         */
 
-        getID generateID = new getID();
-        uniqueID = generateID.retrieveID();
-    }
-    
-    public Item(String AorB)
-    {
-        timeEntered = 0;
-        timeLeft = 0;
-        /*
-        // generating id using singleton class
-        getID generateID = getID.getInstance();
-        uniqueID = generateID.ID + AorB;
-        */
+        dataArray = new Data[7];
 
         getID generateID = new getID();
         uniqueID = generateID.retrieveID();
     }
 
-    public void newData(String s, double tE, double tL) {
-        dataArray = new Data[1];
-
-        dataArray[0] = new Data(s, tE, tL);
+    public void addData(String name, double processingTime){
+        // iterate through every stage array
+        for(int i = 0; i < 7; i++){
+            // null checker
+            if(dataArray[i] != null){
+                // add the data
+                dataArray[i] = new Data(name, processingTime);
+                return;
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ class PA3{
     public static void main(final String[] args) throws IOException{
         // declaring variables and user input scanner
         Scanner Console = new Scanner(System.in);
-        Controller controller;
+        ProductionLine ProductionLine;
         int m, n, qMax;
 
         // taking in data from user
@@ -29,11 +29,11 @@ class PA3{
         }
 
         // sending information to controller
-        controller = new Controller(m, n, qMax);
-        controller.run();
+        ProductionLine = new ProductionLine(m, n, qMax);
+        ProductionLine.run();
 
         // outputting results
-        System.out.println(controller.toString());
+        System.out.println(ProductionLine.toString());
 	}
 }
 

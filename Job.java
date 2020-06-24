@@ -30,6 +30,6 @@ public class Job{
     }
 
     public void finishJob(double t){
-        currentStage.ProcessItem(t);
+        currentStage.processItem(t);
     }
 }

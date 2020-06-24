@@ -1,9 +1,9 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public abstract class Stage {
-    private double timeStart;
-    private double timeFinish;
+    private double processingTime;
     private String name;
     private InterstageStorage nextQueue;
 
@@ -12,19 +12,15 @@ public abstract class Stage {
 
     // default constructor
     public Stage(){
-        timeStart = 0;
-        timeFinish = 0;
+        processingTime = 0;
         name = "";
-
         nextStage = new LinkedList<Stage>();
         prevStage = new LinkedList<Stage>();
     }
 
     // main constructor
     public Stage(String n){
-        timeStart = 0;
-        timeFinish = 0;
-        name = n;
+        processingTime = 0;
         nextStage = new LinkedList<Stage>();
         prevStage = new LinkedList<Stage>();
     }
@@ -41,15 +37,7 @@ public abstract class Stage {
         return nextQueue;
     }
 
-    // T2 = T1 + P.
-    public double processingTime(double p){
-        // timeFinish = timeStart + p;
-        return 2.3;
-    }
-
-    public void ProcessItem(double currentTime){
-        System.out.println("ProcessItem() called + currentTime: " + currentTime);
-    }
+    public abstract void processItem(double currentTime);
     
     // fake toString() method
     public String toString(){
@@ -60,6 +48,7 @@ public abstract class Stage {
         return printer;
     }
 
+    // linked list controlling
     public void setNext(Stage after){
         nextStage.add(after);
     }
@@ -73,6 +62,7 @@ public abstract class Stage {
         return nextStage.get(1);
     }
     
+    // linked list controlling
     public void setPrev(Stage before){
         prevStage.add(before);
     }
@@ -84,6 +74,22 @@ public abstract class Stage {
     }
     public Stage getPrev2(){
         return prevStage.get(1);
+    }
+
+    public void setProcessingTime(int m, int n){
+        Random r = new Random();
+        double d = r.nextDouble();
+        
+        // P = M + N x (d - 0.5)
+        processingTime = m + n * (d - 0.5);
+
+        System.out.println("processingTime: " + processingTime);
+    }
+
+    // T2 = T1 + P.
+    public double getProcessingTime(double p){
+        // timeFinish = timeStart + p;
+        return processingTime;
     }
 
     // TODO: 5. You will also keep a total number of items created by S0a and S0b that arrive at the end of the line.

@@ -1,19 +1,19 @@
 public class Data {
-    private double timeEntered;
-    private double timeLeft;
-    private String stage;
-
-    // default constructor
-    public Data(){
-        timeEntered = 0;
-        timeLeft = 0;
-        stage = "";
-    }
+    private double processingTime;
+    private String stageName;
 
     // main constructor
-    public Data(String s, double tE, double tL){
-        timeEntered = tE;
-        timeLeft = tL;
-        stage = s;
+    public Data(String s, double t){
+        processingTime = t;
+        stageName = s;
+    }
+
+    // accessors
+    public String getName(){
+        return stageName;
+    }
+
+    public double getProcessingTime(){
+        return processingTime;
     }
 }

@@ -1,17 +1,24 @@
+// DESCRIPTION: consists of a number of production stages separated by interstage storage in the form of queues
+//              of finite length (size Qmax). Those interstage stoirages will have varied time taken to process
+//              an item because of the randomisers. This production line is balanced in that the average time
+//              taken at any stage would essentiall be the same.
+
 import java.util.Random;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 import java.lang.Thread;
+import java.util.PriorityQueue;
 
-public class Controller {
+public class ProductionLine {
     private int averageTime;
     private int timeRange;
     private int Qmax;
 
     private ArrayList<Stage> stageList;
     private ArrayList<InterstageStorage> interstageStorageList;
+    private PriorityQueue<Job> priorityQueue;
     
     private InterstageStorage Q01, Q12, Q23, Q34, Q45, Q56;
     private Stage S0b, S3a, S3b, S5a, S5b;                           // 2M, 2N
@@ -23,12 +30,13 @@ public class Controller {
 
     private EventManager EventManager;
 
-    public Controller(int m, int n, int qMax){
+    public ProductionLine(int m, int n, int qMax){
         averageTime = m;
         timeRange = n;
         Qmax = qMax;
         stageList = new ArrayList<Stage>();
         interstageStorageList = new ArrayList<InterstageStorage>();
+        priorityQueue = new PriorityQueue<Job>();
     }
 
     public void run(){
@@ -36,15 +44,9 @@ public class Controller {
         System.out.println("N: " + timeRange);
         System.out.println("Qmax: " + Qmax);
         System.out.println();
+        
 
-        // generating item numbers
-        Random r = new Random();
-        int a = 0;
-        int b = 0;
-        String beginA = "a";
-        String beginB = "b";
-
-        // making interstage storages
+        // making queues
         Q01 = new InterstageStorage("Q01", Qmax);
         Q12 = new InterstageStorage("Q12", Qmax);
         Q23 = new InterstageStorage("Q23", Qmax);
@@ -61,16 +63,28 @@ public class Controller {
         interstageStorageList.add(Q56);
 
         // lineup
-        S0a = new StartStage("S0a", averageTime*2, timeRange*2, a, beginA, Q01);
-        S0b = new StartStage("S0b", averageTime, timeRange, b, beginB, Q01);
+        S0a = new StartStage("S0a", averageTime*2, timeRange*2, Q01);
+        S0b = new StartStage("S0b", averageTime, timeRange, Q01);
         S1 = new MiddleStage("S1", averageTime, timeRange, Q12);
         S2 = new MiddleStage("S2", averageTime, timeRange, Q23);
-        S3a = new MiddleStage("S3a", averageTime*2, timeRange*2, Q34);
+        S3a = new MiddleStage("S3a", averageTime*2, timeRange*2, Q34);              // TODO: take out averagetime stuff cos im dumb lol
         S3b = new MiddleStage("S3b", averageTime*2, timeRange*2, Q34);
         S4 = new MiddleStage("S4", averageTime, timeRange, Q45);
         S5a = new MiddleStage("S5a", averageTime*2, timeRange*2, Q56);
         S5b = new MiddleStage("S5b", averageTime*2, timeRange*2, Q56);
         S6 = new FinishStage("S6", averageTime, timeRange);
+
+        // setting stage times
+        S0a.setProcessingTime(averageTime*2, timeRange*2);
+        S0b.setProcessingTime(averageTime, timeRange);
+        S1.setProcessingTime(averageTime, timeRange);
+        S2.setProcessingTime(averageTime, timeRange);
+        S3a.setProcessingTime(averageTime*2, timeRange*2);
+        S3b.setProcessingTime(averageTime*2, timeRange*2);
+        S4.setProcessingTime(averageTime, timeRange);
+        S5a.setProcessingTime(averageTime*2, timeRange*2);
+        S5b.setProcessingTime(averageTime*2, timeRange*2);
+        S6.setProcessingTime(averageTime, timeRange);
 
         // linking all the stages using java linked lists
         S0a.setNext(S1);
@@ -117,11 +131,36 @@ public class Controller {
         stageList.add(S6);
 
         EventManager = new EventManager();
+        Stage stageFinished;
 
-        
+        // biggest checker, stop the process if the productionline reaches 10 000 000 time units
+        while(EventManager.timeNow() < timeLimit){
+            // process at every stage
+            for(Stage s : stageList){
+                s.processItem(EventManager.timeNow());
+            }
+
+            // finish phase
+            stageFinished = EventManager.nextAction();
+
+            // update stage state durations
+            for(Stage p : stageList){
+                if(p != stageFinished){
+                    p.incStateDur(EventManager.timeNow());
+                }
+            }
+
+            // stamp average items
+            for(InterstageStorage q : interstageStorageList){
+                //
+            }
+        }
     }
 
-    public String toString() {
+    private void incStateDur(double timeNow) {
+	}
+
+	public String toString() {
         String output = "";
 
         output += "Production Stations:\n---------------------------------------------------------\n";
@@ -129,27 +168,23 @@ public class Controller {
         output += S0a.toString();
         output += S0b.toString();
         output += S1.toString();
-        /*
         output += S2.toString();
         output += S3a.toString();
         output += S3b.toString();
         output += S4.toString();
         output += S5a.toString();
         output += S5b.toString();
-        */
         output += "\n";
         
 
         output += "Storage Queues:\n----------------------------------------------------\n";
         output += "Store\t\tAvgTime[t]\t\tAvgItems\n";
         output += Q01.toString();
-        /*
         output += Q12.toString();
         output += Q23.toString();
         output += Q34.toString();
         output += Q45.toString();
         output += Q56.toString();
-        */
         output += "\n\n";
 
         output += "Production Paths:\n------------------\n";

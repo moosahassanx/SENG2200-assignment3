@@ -6,6 +6,7 @@ public class InterstageStorage {
     private double averageTime;
     private double averageItems;
     private int Qmax;
+    private Item[] carArray;
 
     private int count;                  // counts the cmoun
     private List<Integer> countStamp;
@@ -17,6 +18,16 @@ public class InterstageStorage {
         Qmax = q;
         countStamp = new LinkedList<Integer>();
         count = 0;
+        carArray = new Item[Qmax];
+    }
+
+    public void inputItem(Item inputCar){
+        for(int i = 0; i < Qmax; i++){
+            if(carArray[i] != null){
+                carArray[i] = inputCar;
+                return;
+            }
+        }
     }
 
     // TODO: a. the average time an item spends in each queue 

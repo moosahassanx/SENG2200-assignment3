@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class StartStage extends Stage{
     private double timeStart;
@@ -8,7 +9,8 @@ public class StartStage extends Stage{
     private int mean;
     private int range;
 
-    private Item car;
+    private Item tempItem;
+
     private int numberOfItems;
 
     private InterstageStorage nextQueue;
@@ -18,19 +20,13 @@ public class StartStage extends Stage{
         timeStart = 0;
         timeFinish = 0;
         name = "";
-        car = new Item();
     }
 
     // main constructor
-    public StartStage(String n, int m, int r, int amount, String AorB, InterstageStorage q){
+    public StartStage(String n, int m, int r, InterstageStorage q){
         name = n;
         mean = m;
         range = r;
-        numberOfItems = amount;
-
-        for(int i = 0; i < numberOfItems; i++){
-            car = new Item(AorB);
-        }
 
         InterstageStorage nextQueue = q;
     }
@@ -43,10 +39,38 @@ public class StartStage extends Stage{
         return name;
     }
 
+    public void processItem(double currentTime){
+        System.out.println("StartStage processItem() loaded.");
+
+        Item car = new Item();
+        System.out.println("starting new car production");
+
+        Random r = new Random();
+        double d = r.nextDouble();
+        System.out.println("d: " + d);
+
+        // P = M + N x (d - 0.5)
+        double processingTime = mean + range * (d - 0.5);
+        System.out.println("processingTime: " + processingTime);
+
+        car.addData(name, processingTime);
+
+        // temporarily store so the next method can call it
+        tempStoreItem(car);
+    }
+
+    public void tempStoreItem(Item tempCar){
+        tempItem = tempCar;
+    }
+    public Item getTempItem(){
+        return tempItem;
+    }
+
     public void FinishItem(){
         System.out.println("FinishItem() called");
     }
 
+    // for printing stats
     public String toString(){
         String printer = "";  
 

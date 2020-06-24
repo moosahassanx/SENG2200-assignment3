@@ -36,8 +36,8 @@ public class FinishStage extends Stage{
         return name;
     }
 
-    public void ProcessItem(){
-        System.out.println("ProcessItem() called");
+    public void processItem(double currentTime){
+        System.out.println("FinishStage ProcessItem() loaded.");
     }
 
     public void FinishItem(){

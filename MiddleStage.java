@@ -37,8 +37,8 @@ public class MiddleStage extends Stage{
         return name;
     }
 
-    public void ProcessItem(){
-        System.out.println("ProcessItem() called");
+    public void processItem(double currentTime){
+        System.out.println("MiddleStage processItem() loaded.");
     }
 
     public void FinishItem(){
