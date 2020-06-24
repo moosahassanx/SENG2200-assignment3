@@ -28,7 +28,7 @@ public class StartStage extends Stage{
         mean = m;
         range = r;
 
-        InterstageStorage nextQueue = q;
+        nextQueue = q;
     }
 
     public void setName(String n){
@@ -47,7 +47,6 @@ public class StartStage extends Stage{
 
         Random r = new Random();
         double d = r.nextDouble();
-        System.out.println("d: " + d);
 
         // P = M + N x (d - 0.5)
         double processingTime = mean + range * (d - 0.5);
@@ -56,12 +55,11 @@ public class StartStage extends Stage{
         car.addData(name, processingTime);
 
         // temporarily store so the next method can call it
-        storeToQueue(car);
+        nextQueue.inputItem(car);
+
+        System.out.println();
     }
 
-    public void storeToQueue(Item tempCar){
-        nextQueue.inputItem(tempCar);
-    }
     public Item getTempItem(){
         return tempItem;
     }

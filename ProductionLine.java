@@ -8,6 +8,9 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
+
+import jdk.jfr.Event;
+
 import java.lang.Thread;
 import java.util.PriorityQueue;
 
@@ -131,15 +134,19 @@ public class ProductionLine {
         stageList.add(S6);
 
         EventManager = new EventManager();
-        Stage stageFinished;
 
-        // biggest checker, stop the process if the productionline reaches 10 000 000 time units
+        // biggest checker, stop the process once the productionline reaches 10 000 000 time units
         while(EventManager.timeNow() < timeLimit){
+
             // process at every stage
             for(Stage s : stageList){
+                // process all the items at this current time
                 s.processItem(EventManager.timeNow());
             }
 
+            System.out.println();
+
+            /*
             // finish phase
             stageFinished = EventManager.nextAction();
 
@@ -154,6 +161,7 @@ public class ProductionLine {
             for(InterstageStorage q : interstageStorageList){
                 //
             }
+            */
         }
     }
 

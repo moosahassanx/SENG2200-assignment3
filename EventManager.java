@@ -22,6 +22,9 @@ public class EventManager {
 	public Stage nextAction(){
 		Job nextJob = JobQueue.poll();			// removed the item with the head of the queue, and cos its a priority queue it removed the highest priority queue
 		
+		// gives you the stage
+		
+		/*
 		System.out.println("getremainingDuration(): " + nextJob.getRemainingDuration());
 
 		currentTime = nextJob.getRemainingDuration();
@@ -31,7 +34,8 @@ public class EventManager {
 		}
 
 		nextJob.finishJob(currentTime);
-
+		*/
+		
 		return nextJob.getCurrentStage();
 	}
 
