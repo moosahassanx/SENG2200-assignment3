@@ -56,11 +56,11 @@ public class StartStage extends Stage{
         car.addData(name, processingTime);
 
         // temporarily store so the next method can call it
-        tempStoreItem(car);
+        storeToQueue(car);
     }
 
-    public void tempStoreItem(Item tempCar){
-        tempItem = tempCar;
+    public void storeToQueue(Item tempCar){
+        nextQueue.inputItem(tempCar);
     }
     public Item getTempItem(){
         return tempItem;

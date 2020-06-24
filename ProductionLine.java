@@ -157,10 +157,7 @@ public class ProductionLine {
         }
     }
 
-    private void incStateDur(double timeNow) {
-	}
-
-	public String toString() {
+    public String toString() {
         String output = "";
 
         output += "Production Stations:\n---------------------------------------------------------\n";
