@@ -113,10 +113,6 @@ public class StartStage extends Stage{
         return tempItem;
     }
 
-    public void FinishItem(){
-        System.out.println("FinishItem() called");
-    }
-
     // for printing stats
     public String toString(){
         String printer = "";  

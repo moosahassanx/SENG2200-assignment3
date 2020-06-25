@@ -1,18 +1,15 @@
 public class Job implements Comparable<Job>{
-    private double startTime;
     private double duration;
     private double finishTime;
     private Stage currentStage;
 
-    public Job(){
-        startTime = 0;
+    public Job() {
         duration = 0;
         finishTime = 0;
     }
 
     public Job(double timeNow, Stage s) {
         currentStage = s;
-        startTime = 0;
         duration = timeNow;
     }
 	

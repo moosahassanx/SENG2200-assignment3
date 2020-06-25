@@ -69,10 +69,6 @@ public class FinishStage extends Stage{
         }
     }
 
-    public void FinishItem(){
-        System.out.println("FinishItem() called");
-    }
-
     public String toString(){
         String printer = "";  
 

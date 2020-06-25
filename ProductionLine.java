@@ -3,15 +3,7 @@
 //              an item because of the randomisers. This production line is balanced in that the average time
 //              taken at any stage would essentiall be the same.
 
-import java.util.Random;
-
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Scanner;
-
-import jdk.jfr.Event;
-
-import java.lang.Thread;
 import java.util.PriorityQueue;
 
 public class ProductionLine {
@@ -21,26 +13,22 @@ public class ProductionLine {
 
     private ArrayList<Stage> stageList;
     private ArrayList<InterstageStorage> interstageStorageList;
-    private PriorityQueue<Job> priorityQueue;
-    
     private InterstageStorage Q01, Q12, Q23, Q34, Q45, Q56;
-    private Stage S0b, S3a, S3b, S5a, S5b;                           // 2M, 2N
-    private Stage S0a, S1, S2, S4, S6;                               // 1M, 1N
-    
+    private Stage S0b, S3a, S3b, S5a, S5b;                          // 2M, 2N
+    private Stage S0a, S1, S2, S4, S6;                              // 1M, 1N
+
     private double currentTime;
     private double timeLimit = 10000000;
 
-    private double d;       // random number between 0 and 1
-
     private Scheduler Scheduler;
 
-    public ProductionLine(int m, int n, int qMax){
+    public ProductionLine(int m, int n, int qMax) {
         averageTime = m;
         timeRange = n;
         Qmax = qMax;
         stageList = new ArrayList<Stage>();
         interstageStorageList = new ArrayList<InterstageStorage>();
-        priorityQueue = new PriorityQueue<Job>();
+        new PriorityQueue<Job>();
         currentTime = 0;
     }
 
@@ -72,26 +60,12 @@ public class ProductionLine {
         S0b = new StartStage("S0b", averageTime, timeRange, Q01, "b");
         S1 = new MiddleStage("S1", averageTime, timeRange, Q12, Q01);
         S2 = new MiddleStage("S2", averageTime, timeRange, Q23, Q12);
-        S3a = new MiddleStage("S3a", averageTime*2, timeRange*2, Q34, Q23);              // TODO: take out averagetime stuff cos im dumb lol
+        S3a = new MiddleStage("S3a", averageTime*2, timeRange*2, Q34, Q23);
         S3b = new MiddleStage("S3b", averageTime*2, timeRange*2, Q34, Q23);
         S4 = new MiddleStage("S4", averageTime, timeRange, Q45, Q34);
         S5a = new MiddleStage("S5a", averageTime*2, timeRange*2, Q56, Q45);
         S5b = new MiddleStage("S5b", averageTime*2, timeRange*2, Q56, Q45);
         S6 = new FinishStage("S6", averageTime, timeRange, Q56);
-
-        /*
-        // setting stage times
-        S0a.setProcessingTime(averageTime*2, timeRange*2);
-        S0b.setProcessingTime(averageTime, timeRange);
-        S1.setProcessingTime(averageTime, timeRange);
-        S2.setProcessingTime(averageTime, timeRange);
-        S3a.setProcessingTime(averageTime*2, timeRange*2);
-        S3b.setProcessingTime(averageTime*2, timeRange*2);
-        S4.setProcessingTime(averageTime, timeRange);
-        S5a.setProcessingTime(averageTime*2, timeRange*2);
-        S5b.setProcessingTime(averageTime*2, timeRange*2);
-        S6.setProcessingTime(averageTime, timeRange);
-        */
 
         // linking all the stages using java linked lists
         S0a.setNext(S1);
@@ -171,23 +145,6 @@ public class ProductionLine {
             }
 
             currentTime = bigJob.getCurrentTime();
-
-            /*
-            // finish phase
-            stageFinished = Scheduler.nextAction();
-
-            // update stage state durations
-            for(Stage p : stageList){
-                if(p != stageFinished){
-                    p.incStateDur(Scheduler.timeNow());
-                }
-            }
-
-            // stamp average items
-            for(InterstageStorage q : interstageStorageList){
-                //
-            }
-            */
         }
     }
 

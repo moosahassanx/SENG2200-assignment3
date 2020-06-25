@@ -8,7 +8,7 @@ public class InterstageStorage {
     private int Qmax;
     private Item[] carArray;
 
-    private int count;                  // number of items in the storage
+    private int count;
     private List<Integer> countStamp;
 
     public InterstageStorage(String n, int q){
@@ -22,7 +22,7 @@ public class InterstageStorage {
     }
 
     public String getName(){
-        return name;            // mainly used for testing
+        return name;
     }
 
     public boolean isFull(){
@@ -60,13 +60,13 @@ public class InterstageStorage {
     }
 
     public Item outputItem(){
+        // for returning item
         Item outputCar = null;
-
         outputCar = carArray[0];
-
+        
+        // shuffling arrays down the order
         carArray[0] = carArray[1];
 
-        // shuffling arrays down the order
         if(carArray[2] != null){
             carArray[1] = carArray[2];
         }
@@ -83,29 +83,8 @@ public class InterstageStorage {
             carArray[5] = carArray[6];
         }
 
+        // return item
         return outputCar;
-
-        /*
-        // setup
-        Item outputItem = carArray[0];
-        int originalLength = carArray.length;
-        carArray[0] = null;
-
-        // shuffle array downwards
-        for(int i = 0; i < originalLength; i++){
-            if(carArray[i+1] != null){
-                carArray[i] = carArray[i+1];
-            }
-
-            else{
-                // return
-                return outputItem;
-            }
-        }
-
-        // return
-        return outputItem;
-        */
     }
 
     // TODO: a. the average time an item spends in each queue 
@@ -134,8 +113,4 @@ public class InterstageStorage {
 
         return output;
     }
-
-	public void stampCount() {
-        countStamp.add(new Integer(count));
-	}
 }
