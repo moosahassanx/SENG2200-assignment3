@@ -32,7 +32,7 @@ public class ProductionLine {
 
     private double d;       // random number between 0 and 1
 
-    private EventManager EventManager;
+    private Scheduler Scheduler;
 
     public ProductionLine(int m, int n, int qMax){
         averageTime = m;
@@ -138,27 +138,48 @@ public class ProductionLine {
         stageList.add(S6);  // 9
 
         // create new event manager
-        EventManager = new EventManager();
+        Scheduler = new Scheduler();
+
+        Scheduler.addToPriorityQueue(stageList.get(0), 0);  // S0a
+        Scheduler.addToPriorityQueue(stageList.get(1), 0);  // S0b
 
         // overall checker - stop the process once the productionline reaches 10 000 000 time units
-        while(EventManager.timeNow() < timeLimit){
-            // adjacent stage checker
-                // if the stage is 2, then check 1 and 3
+        while(Scheduler.timeNow() < timeLimit){
+            // take the job with the highest priority and use that
+            Job bigJob = Scheduler.removeJob();
 
-            // blow all the jobs in the overall checker
-            Job bigJob = EventManager.addToPriorityQueue(stageList, EventManager.timeNow());
-            currentTime = bigJob.getCurrentTime();
+            bigJob.getCurrentStage().processItem(currentTime);
             
-            System.out.println();
+            System.out.println("MANAGING: " + bigJob.getCurrentStage().getName());
+
+            // previous stages
+            for(Stage s : bigJob.getCurrentStage().getPrev()){
+                if(s.getCurrentState() == 1){
+                    // previous stage is blocked
+                    Scheduler.addToPriorityQueue(s, 0);
+                    break;
+                }
+            }
+
+            // next stages
+            for(Stage s : bigJob.getCurrentStage().getNext()){
+                // next stage is starved
+                if(s.getCurrentState() == -1){
+                    Scheduler.addToPriorityQueue(s, 0);
+                    break;
+                }
+            }
+
+            currentTime = bigJob.getCurrentTime();
 
             /*
             // finish phase
-            stageFinished = EventManager.nextAction();
+            stageFinished = Scheduler.nextAction();
 
             // update stage state durations
             for(Stage p : stageList){
                 if(p != stageFinished){
-                    p.incStateDur(EventManager.timeNow());
+                    p.incStateDur(Scheduler.timeNow());
                 }
             }
 

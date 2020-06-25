@@ -42,6 +42,7 @@ public class MiddleStage extends Stage{
     }
 
     public void processItem(double currentTime){
+        System.out.println(name + " processItem()");
 
         // case: the stage is not in starve state
         if(getCurrentState() != -1){

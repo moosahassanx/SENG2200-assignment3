@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -7,8 +8,8 @@ public abstract class Stage {
     private String name;
     private InterstageStorage nextQueue;
 
-    private List<Stage> nextStage;
-    private List<Stage> prevStage;
+    private ArrayList<Stage> nextStage;
+    private ArrayList<Stage> prevStage;
 
     private int currentState;
 
@@ -16,16 +17,16 @@ public abstract class Stage {
     public Stage(){
         processingTime = 0;
         name = "";
-        nextStage = new LinkedList<Stage>();
-        prevStage = new LinkedList<Stage>();
+        nextStage = new ArrayList<Stage>();
+        prevStage = new ArrayList<Stage>();
         currentState = 0;
     }
 
     // main constructor
     public Stage(String n){
         processingTime = 0;
-        nextStage = new LinkedList<Stage>();
-        prevStage = new LinkedList<Stage>();
+        nextStage = new ArrayList<Stage>();
+        prevStage = new ArrayList<Stage>();
     }
 
     public double getProcessingTime(){
@@ -76,12 +77,8 @@ public abstract class Stage {
     public int getNextSize(){
         return nextStage.size();
     }
-    public Stage getNext(){
-        return nextStage.get(0);
-    }
-    public Stage getNext2(){
-        // if(condition)            ?     <true>       : <false>
-        return nextStage.size() > 1 ? nextStage.get(1) : null;
+    public ArrayList<Stage> getNext(){
+        return nextStage;
     }
     
     // linked list controlling
@@ -91,12 +88,8 @@ public abstract class Stage {
     public int getPrevSize(){
         return prevStage.size();
     }
-    public Stage getPrev(){
-        return prevStage.size() > 1 ? prevStage.get(0) : null;
-    }
-    public Stage getPrev2(){
-        // if condition             ?      when true        when false
-        return prevStage.size() > 1 ?  prevStage.get(1) : null;
+    public ArrayList<Stage> getPrev(){
+        return prevStage;
     }
 
     public void setProcessingTime(int m, int n){

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class EventManager {
+public class Scheduler {
 	private double currentTime;
 	
 	private double time;
@@ -11,12 +11,24 @@ public class EventManager {
 	private PriorityQueue<Job> PQ;
 
     // constructor
-    public EventManager(){
+    public Scheduler(){
 		currentTime = 0;
 		PQ = new PriorityQueue<Job>();
 	}
 
-	public Job addToPriorityQueue(ArrayList<Stage> stageList, double timeNow){
+	public void addToPriorityQueue(Stage s, double timeNow){
+		System.out.println("addToPriorityQueue " + s.getName());
+		Job Job = new Job(timeNow, s);
+		PQ.offer(Job);
+	}
+	
+	public Job removeJob(){
+		Job outputJob = PQ.poll();
+		return outputJob;
+	}
+
+	/*
+	public Job addToPriorityQueue(Stage s, double timeNow){
 		Job firstJob = new Job();
 		Job secondJob = new Job();
 
@@ -24,9 +36,11 @@ public class EventManager {
 		if(timeNow == 0){
 			firstJob = new Job(timeNow, stageList.get(0));
 			secondJob = new Job(timeNow, stageList.get(1));
-			System.out.println("current stage: " + firstJob.getCurrentStage().getName());
+			System.out.println("Stage: " + firstJob.getCurrentStage().getName());
+			System.out.println("Stage: " + firstJob.getCurrentStage().getName());
 
 			PQ.offer(firstJob);
+			PQ.offer(secondJob);
 			System.out.println("firstJob offered");
 		}
 
@@ -42,12 +56,13 @@ public class EventManager {
 
 		return nextJob;
 	}
+	*/
 
-	public double timeNow() {
+	public double timeNow(){
 		return currentTime;
 	}
 
-	public Stage produceItem() {
+	public Stage produceItem(){
 		return null;
 	}
 }

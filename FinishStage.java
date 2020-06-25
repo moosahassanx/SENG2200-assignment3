@@ -42,9 +42,6 @@ public class FinishStage extends Stage{
     }
 
     public void processItem(double currentTime){
-        System.out.println("STAGE: " + name + " = " + getCurrentState());
-        // take the item, grabs the stats from it, and then get rid of the item
-
         // case: stage is starved
         if(getCurrentState() == -1){
             // case: there are no items to process
