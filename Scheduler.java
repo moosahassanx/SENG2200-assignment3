@@ -12,13 +12,17 @@ public class Scheduler {
 	}
 
 	public void addToPriorityQueue(Stage s, double timeNow){
-		System.out.println("addToPriorityQueue " + s.getName());
-		Job Job = new Job(timeNow, s);
+		// System.out.println("addToPriorityQueue " + s.getName());
+		Job Job = new Job(currentTime + timeNow, s);
 		PQ.offer(Job);
 	}
 	
 	public Job removeJob(){
 		Job outputJob = PQ.poll();
+
+		// updating time
+		currentTime = outputJob.getCurrentTime();
+
 		return outputJob;
 	}
 

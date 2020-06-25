@@ -42,35 +42,50 @@ public class MiddleStage extends Stage{
     }
 
     public void processItem(double currentTime){
-        System.out.println(name + " processItem()");
+        // System.out.println(name + " processItem()");
 
-        // case: the stage is not in starve state
-        if(getCurrentState() != -1){
-            // case: theres space in the next queue storage
-            if(nextQueue.isFull() == false){
-                nextQueue.inputItem(tempItem);
+        // case: stage is starved
+        if(getCurrentState() == -1){
+            if(prevQueue.isEmpty() == false){
+                // pull item
+                tempItem = prevQueue.outputItem();
+
+                if(nextQueue.isFull()){
+                    // blocked
+                    setCurrentState(1);
+                }
+
+                else{
+                    // busy
+                    setCurrentState(0);
+                }
             }
+        }
 
-            // theres no space in the next queue storage
-            else{
-                // set stage to blocked
+        // busy or blocked
+        else if(getCurrentState() == 0 || getCurrentState() == 1){
+            if(nextQueue.isFull()){
+                // stage is blocked
                 setCurrentState(1);
             }
-        }
 
-        // case: prevQueue has items in it
-        if(prevQueue.isEmpty() == false){
-            // get the item from prev queue
-            tempItem = prevQueue.outputItem();
+            else{
+                // push
+                nextQueue.inputItem(tempItem);
 
-            // set stage to busy
-            setCurrentState(0);
-        }
+                // check if prev storage be empty
+                if(prevQueue.isEmpty()){
+                    setCurrentState(-1);
+                }
 
-        // case: theres no items to pull
-        else{
-            setCurrentState(-1);
-        }
+                else{
+                    tempItem = prevQueue.outputItem();
+
+                    // set stage as busy
+                    setCurrentState(0);
+                }
+            }
+        }        
     }
 
     public String toString(){

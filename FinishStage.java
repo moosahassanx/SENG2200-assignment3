@@ -10,6 +10,7 @@ public class FinishStage extends Stage{
 
     private Item[] itemArray;
     private int numberOfItems;
+    private Item tempItem;
 
     InterstageStorage prevQueue;
 
@@ -52,20 +53,34 @@ public class FinishStage extends Stage{
             // case: there are items to be processed
             else{
                 Item car = prevQueue.outputItem();
-                itemArray[numberOfItems] = car;
-                numberOfItems++;
+                // itemArray[numberOfItems] = car;
+                // numberOfItems++;
                 System.out.println(car.getName() + " has been finalised.");
+                tempItem = car;
+
+                // set stage as busy
+                setCurrentState(0);
             }
         }
 
         // case: stage is busy
         else if(getCurrentState() == 0){
-            System.out.println(name + " is busy.");
+            // System.out.println(name + " is busy.");
+
+            // case: there are no items to process
+            if(prevQueue.isEmpty() == true){
+                setCurrentState(-1);
+            }
+
+            // case: theres items
+            else{
+                tempItem = prevQueue.outputItem();
+            }
         }
 
         // case: stage is blocked
         else if(getCurrentState() == 1){
-            System.out.println("Stage is blocked. How did you manage to do this?");
+            // System.out.println("Stage is blocked. How did you manage to do this?");
         }
     }
 

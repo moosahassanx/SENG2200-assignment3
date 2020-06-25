@@ -46,7 +46,7 @@ public class StartStage extends Stage{
     }
 
     public void processItem(double currentTime){
-        System.out.println(name + " processItem() loaded.");
+        // System.out.println(name + " processItem() loaded.");
 
         // case: stage is currently starved
         if(getCurrentState() == -1){
@@ -56,13 +56,13 @@ public class StartStage extends Stage{
 
             // produce an item
             Item car = new Item(branding);
-            System.out.println("starting new car production: " + car.getName());
+            // System.out.println("starting new car production: " + car.getName());
 
             // process item - P = M + N x (d - 0.5)
             Random r = new Random();
             double d = r.nextDouble();
             double processingTime = mean + range * (d - 0.5);
-            System.out.println("processingTime: " + processingTime);
+            // System.out.println("processingTime: " + processingTime);
             setProcessingTime(processingTime);
     
             // print data onto item
@@ -72,41 +72,42 @@ public class StartStage extends Stage{
             tempItem = car;
         }
 
-        // case: the stage is currently busy
-        else if(getCurrentState() == 0){
+        // case: the stage is currently busy or blocked
+        else if(getCurrentState() == 0 || getCurrentState() == 1){
             // case: the next storage is full
             if(nextQueue.isFull() == true){
-                System.out.println(nextQueue.getName() + " is full");
+                // System.out.println(nextQueue.getName() + " is full");
                 // set the stage as blocked
                 setCurrentState(1);
             }
 
             // case: theres room in the next interstage storage
             else{
-                System.out.println(nextQueue.getName() + " has room");
+                // System.out.println(nextQueue.getName() + " has room");
                 // insert the stage stored item into the next interstage storage
                 nextQueue.inputItem(tempItem);
 
-                // set the stage status to starved
-                setCurrentState(-1);
-            }
-        }
+                // stage is now busy
+                setCurrentState(0);
 
+                // produce an item
+                Item car = new Item(branding);
+                // System.out.println("starting new car production: " + car.getName());
+
+                // process item - P = M + N x (d - 0.5)
+                Random r = new Random();
+                double d = r.nextDouble();
+                double processingTime = mean + range * (d - 0.5);
+                // System.out.println("processingTime: " + processingTime);
+                setProcessingTime(processingTime);
         
-        // stage is currently blocked
-        else if(getCurrentState() == 1){
-            // next storage is full
-            if(nextQueue.isFull() == true){
-                // do nothing
-                System.out.println(nextQueue.getName() + " is full so it cant make more");
-            }
-
-            // theres space in the next storage
-            else{
-                
+                // print data onto item
+                car.addData(name, processingTime);
+        
+                // temporarily store it within the stage for later use
+                tempItem = car;
             }
         }
-
     }
 
     public Item getTempItem(){

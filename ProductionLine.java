@@ -122,9 +122,15 @@ public class ProductionLine {
             // take the job with the highest priority and use that
             Job bigJob = Scheduler.removeJob();
 
-            bigJob.getCurrentStage().processItem(currentTime);
+            // process the priority stage
+            bigJob.getCurrentStage().processItem(Scheduler.timeNow());
+
+            // for busy stages
+            if(bigJob.getCurrentStage().getCurrentState() == 0){
+                Scheduler.addToPriorityQueue(bigJob.getCurrentStage(), bigJob.getCurrentStage().getProcessingTime());
+            }
             
-            System.out.println("MANAGING: " + bigJob.getCurrentStage().getName());
+            // System.out.println("MANAGING: " + bigJob.getCurrentStage().getName());
 
             // previous stages
             for(Stage s : bigJob.getCurrentStage().getPrev()){
@@ -146,9 +152,11 @@ public class ProductionLine {
 
             currentTime = bigJob.getCurrentTime();
         }
+
+        System.out.println("complete");
     }
 
-    public String toString() {
+    public String toString(){
         String output = "";
 
         output += "Production Stations:\n---------------------------------------------------------\n";

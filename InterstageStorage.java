@@ -1,24 +1,24 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class InterstageStorage {
     private String name;
     private double averageTime;
     private double averageItems;
     private int Qmax;
-    private Item[] carArray;
+    private Queue<Item> carArray;
 
     private int count;
-    private List<Integer> countStamp;
-
-    public InterstageStorage(String n, int q){
+    
+    public InterstageStorage(String n, int q) {
         name = n;
         averageTime = 0;
         averageItems = 0;
         Qmax = q;
-        countStamp = new LinkedList<Integer>();
+        new LinkedList<Integer>();
         count = 0;
-        carArray = new Item[Qmax];
+        carArray = new LinkedList<Item>();
     }
 
     public String getName(){
@@ -47,44 +47,23 @@ public class InterstageStorage {
         }
     }
 
-    public void inputItem(Item inputCar){
+    public boolean inputItem(Item inputCar){
         System.out.println("inputting " + inputCar.getName() + " in " + name);
 
-        for(int i = 0; i < Qmax; i++){
-            if(carArray[i] == null){
-                carArray[i] = inputCar;
-                count++;
-                return;
-            }
+        // storage is full
+        if(isFull() == true){
+            return false;       // failed to insert car
+        }
+
+        // theres room
+        else{
+            carArray.add(inputCar);
+            return true;
         }
     }
 
     public Item outputItem(){
-        // for returning item
-        Item outputCar = null;
-        outputCar = carArray[0];
-        
-        // shuffling arrays down the order
-        carArray[0] = carArray[1];
-
-        if(carArray[2] != null){
-            carArray[1] = carArray[2];
-        }
-        if(carArray[3] != null){
-            carArray[2] = carArray[3];
-        }
-        if(carArray[4] != null){
-            carArray[3] = carArray[4];
-        }
-        if(carArray[5] != null){
-            carArray[4] = carArray[5];
-        }
-        if(carArray[6] != null){
-            carArray[5] = carArray[6];
-        }
-
-        // return item
-        return outputCar;
+        return carArray.poll();
     }
 
     // TODO: a. the average time an item spends in each queue 
