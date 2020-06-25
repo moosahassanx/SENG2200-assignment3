@@ -6,7 +6,7 @@ public class Item {
     private String uniqueID;
     private Data[] dataArray;
 
-    public Item(){
+    public Item(String AorB){
         timeEntered = 0;
         timeLeft = 0;
         /*
@@ -18,7 +18,7 @@ public class Item {
         dataArray = new Data[7];
 
         getID generateID = new getID();
-        uniqueID = generateID.retrieveID();
+        uniqueID = generateID.retrieveID() + AorB;
     }
 
     public void addData(String name, double processingTime){
@@ -31,5 +31,9 @@ public class Item {
                 return;
             }
         }
+    }
+
+    public String getName(){
+        return uniqueID;
     }
 }

@@ -10,12 +10,15 @@ public abstract class Stage {
     private List<Stage> nextStage;
     private List<Stage> prevStage;
 
+    private int currentState;
+
     // default constructor
     public Stage(){
         processingTime = 0;
         name = "";
         nextStage = new LinkedList<Stage>();
         prevStage = new LinkedList<Stage>();
+        currentState = 0;
     }
 
     // main constructor
@@ -23,6 +26,17 @@ public abstract class Stage {
         processingTime = 0;
         nextStage = new LinkedList<Stage>();
         prevStage = new LinkedList<Stage>();
+    }
+
+    public void setCurrentState(int s){
+        // -1: starve
+        //  0: busy
+        //  1: blocked
+        currentState = s;
+    }
+
+    public int getCurrentState(){
+        return currentState;
     }
 
     public void setName(String n){
@@ -59,7 +73,8 @@ public abstract class Stage {
         return nextStage.get(0);
     }
     public Stage getNext2(){
-        return nextStage.get(1);
+        // if(condition)            ?     <true>       : <false>
+        return nextStage.size() > 1 ? nextStage.get(1) : null;
     }
     
     // linked list controlling
@@ -73,7 +88,8 @@ public abstract class Stage {
         return prevStage.get(0);
     }
     public Stage getPrev2(){
-        return prevStage.get(1);
+        // if condition             ?      when true        when false
+        return prevStage.size() > 1 ?  prevStage.get(1) : null;
     }
 
     public void setProcessingTime(int m, int n){

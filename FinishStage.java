@@ -8,8 +8,10 @@ public class FinishStage extends Stage{
     private int mean;
     private int range;
 
-    private Item car;
+    private Item[] itemArray;
     private int numberOfItems;
+
+    InterstageStorage prevQueue;
 
     private String nextQueue;
 
@@ -18,14 +20,17 @@ public class FinishStage extends Stage{
         timeStart = 0;
         timeFinish = 0;
         name = "";
-        car = new Item();
     }
 
     // main constructor
-    public FinishStage(String n, int m, int r){
+    public FinishStage(String n, int m, int r, InterstageStorage before){
         name = n;
         mean = m;
         range = r;
+        prevQueue = before;
+        itemArray = new Item[10000];
+        numberOfItems = 0;
+        setCurrentState(-1);
     }
 
     public void setName(String n){
@@ -37,7 +42,34 @@ public class FinishStage extends Stage{
     }
 
     public void processItem(double currentTime){
-        System.out.println("FinishStage ProcessItem() loaded.");
+        System.out.println("STAGE: " + name + " = " + getCurrentState());
+        // take the item, grabs the stats from it, and then get rid of the item
+
+        // case: stage is starved
+        if(getCurrentState() == -1){
+            // case: there are no items to process
+            if(prevQueue.isEmpty() == true){
+                System.out.println("there are no items to be processed");
+            }
+
+            // case: there are items to be processed
+            else{
+                Item car = prevQueue.outputItem();
+                itemArray[numberOfItems] = car;
+                numberOfItems++;
+                System.out.println(car.getName() + " has been finalised.");
+            }
+        }
+
+        // case: stage is busy
+        else if(getCurrentState() == 0){
+            System.out.println(name + " is busy.");
+        }
+
+        // case: stage is blocked
+        else if(getCurrentState() == 1){
+            System.out.println("Stage is blocked. How did you manage to do this?");
+        }
     }
 
     public void FinishItem(){

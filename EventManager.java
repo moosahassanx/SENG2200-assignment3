@@ -1,4 +1,5 @@
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -7,20 +8,35 @@ public class EventManager {
 	
 	private double time;
 
-	private Queue<Job> JobQueue;
+	private PriorityQueue<Job> PJ;
 
     // constructor
     public EventManager(){
 		currentTime = 0;
-		JobQueue = new PriorityQueue<Job>();
-	}
-	
-	public void addNewJobQueue(double duration, Stage stage){
-		JobQueue.add(new Job(duration, stage));
+		PJ = new PriorityQueue<Job>();
 	}
 
-	public Stage nextAction(){
-		Job nextJob = JobQueue.poll();			// removed the item with the head of the queue, and cos its a priority queue it removed the highest priority queue
+	// the first items created by S0a and S0b are created simultaneously
+	// whenever the items have been processed and the next queue is not blocked - transfer to next queue storage
+	// s1 pulls the item and processes it
+
+	public Stage performProduction(ArrayList<Stage> stageList, double timeNow){
+
+		for(Stage s : stageList){
+			Stage tempStage = s.getPrev();
+		}
+		
+		
+
+		System.out.println("Stage: " + stageList.getName());
+		stageList.processItem(timeNow);			// only call when job is complete
+
+		// check for adjacent stages
+		stageList.processAdjacent();
+
+		Job nextJob = PJ.poll();			// printing the top element and removing it (GeeksForGeeks))
+
+		System.out.println("current stage: " + nextJob.getCurrentStage().getName());
 		
 		// gives you the stage
 		
@@ -38,6 +54,8 @@ public class EventManager {
 		
 		return nextJob.getCurrentStage();
 	}
+
+
 
 	public double timeNow() {
 		return currentTime;

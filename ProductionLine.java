@@ -66,17 +66,18 @@ public class ProductionLine {
         interstageStorageList.add(Q56);
 
         // lineup
-        S0a = new StartStage("S0a", averageTime*2, timeRange*2, Q01);
-        S0b = new StartStage("S0b", averageTime, timeRange, Q01);
-        S1 = new MiddleStage("S1", averageTime, timeRange, Q12);
-        S2 = new MiddleStage("S2", averageTime, timeRange, Q23);
-        S3a = new MiddleStage("S3a", averageTime*2, timeRange*2, Q34);              // TODO: take out averagetime stuff cos im dumb lol
-        S3b = new MiddleStage("S3b", averageTime*2, timeRange*2, Q34);
-        S4 = new MiddleStage("S4", averageTime, timeRange, Q45);
-        S5a = new MiddleStage("S5a", averageTime*2, timeRange*2, Q56);
-        S5b = new MiddleStage("S5b", averageTime*2, timeRange*2, Q56);
-        S6 = new FinishStage("S6", averageTime, timeRange);
+        S0a = new StartStage("S0a", averageTime*2, timeRange*2, Q01, "a");
+        S0b = new StartStage("S0b", averageTime, timeRange, Q01, "b");
+        S1 = new MiddleStage("S1", averageTime, timeRange, Q12, Q01);
+        S2 = new MiddleStage("S2", averageTime, timeRange, Q23, Q12);
+        S3a = new MiddleStage("S3a", averageTime*2, timeRange*2, Q34, Q23);              // TODO: take out averagetime stuff cos im dumb lol
+        S3b = new MiddleStage("S3b", averageTime*2, timeRange*2, Q34, Q23);
+        S4 = new MiddleStage("S4", averageTime, timeRange, Q45, Q34);
+        S5a = new MiddleStage("S5a", averageTime*2, timeRange*2, Q56, Q45);
+        S5b = new MiddleStage("S5b", averageTime*2, timeRange*2, Q56, Q45);
+        S6 = new FinishStage("S6", averageTime, timeRange, Q56);
 
+        /*
         // setting stage times
         S0a.setProcessingTime(averageTime*2, timeRange*2);
         S0b.setProcessingTime(averageTime, timeRange);
@@ -88,6 +89,7 @@ public class ProductionLine {
         S5a.setProcessingTime(averageTime*2, timeRange*2);
         S5b.setProcessingTime(averageTime*2, timeRange*2);
         S6.setProcessingTime(averageTime, timeRange);
+        */
 
         // linking all the stages using java linked lists
         S0a.setNext(S1);
@@ -133,16 +135,19 @@ public class ProductionLine {
         stageList.add(S5b);
         stageList.add(S6);
 
+        // create new event manager
         EventManager = new EventManager();
 
-        // biggest checker, stop the process once the productionline reaches 10 000 000 time units
+        // overall checker - stop the process once the productionline reaches 10 000 000 time units
         while(EventManager.timeNow() < timeLimit){
+            // adjacent stage checker
+                // if the stage is 2, then check 1 and 3
 
-            // process at every stage
-            for(Stage s : stageList){
-                // process all the items at this current time
-                s.processItem(EventManager.timeNow());
-            }
+            // process all the items adjacently
+            
+
+            EventManager.performProduction(stageList, EventManager.timeNow());
+            System.out.println();
 
             System.out.println();
 
