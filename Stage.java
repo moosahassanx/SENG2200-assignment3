@@ -28,6 +28,13 @@ public abstract class Stage {
         prevStage = new LinkedList<Stage>();
     }
 
+    public double getProcessingTime(){
+        return processingTime;
+    }
+    public void setProcessingTime(double p){
+        processingTime = p;
+    }
+
     public void setCurrentState(int s){
         // -1: starve
         //  0: busy
@@ -85,7 +92,7 @@ public abstract class Stage {
         return prevStage.size();
     }
     public Stage getPrev(){
-        return prevStage.get(0);
+        return prevStage.size() > 1 ? prevStage.get(0) : null;
     }
     public Stage getPrev2(){
         // if condition             ?      when true        when false

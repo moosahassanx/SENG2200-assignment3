@@ -27,6 +27,7 @@ public class ProductionLine {
     private Stage S0b, S3a, S3b, S5a, S5b;                           // 2M, 2N
     private Stage S0a, S1, S2, S4, S6;                               // 1M, 1N
     
+    private double currentTime;
     private double timeLimit = 10000000;
 
     private double d;       // random number between 0 and 1
@@ -40,6 +41,7 @@ public class ProductionLine {
         stageList = new ArrayList<Stage>();
         interstageStorageList = new ArrayList<InterstageStorage>();
         priorityQueue = new PriorityQueue<Job>();
+        currentTime = 0;
     }
 
     public void run(){
@@ -124,16 +126,16 @@ public class ProductionLine {
         S6.setPrev(S5b);
 
         // adding to stage arraylist (controller communicating)
-        stageList.add(S0a);
-        stageList.add(S0b);
-        stageList.add(S1);
-        stageList.add(S2);
-        stageList.add(S3a);
-        stageList.add(S3b);
-        stageList.add(S4);
-        stageList.add(S5a);
-        stageList.add(S5b);
-        stageList.add(S6);
+        stageList.add(S0a); // 0
+        stageList.add(S0b); // 1
+        stageList.add(S1);  // 2
+        stageList.add(S2);  // 3
+        stageList.add(S3a); // 4
+        stageList.add(S3b); // 5
+        stageList.add(S4);  // 6
+        stageList.add(S5a); // 7
+        stageList.add(S5b); // 8
+        stageList.add(S6);  // 9
 
         // create new event manager
         EventManager = new EventManager();
@@ -143,12 +145,10 @@ public class ProductionLine {
             // adjacent stage checker
                 // if the stage is 2, then check 1 and 3
 
-            // process all the items adjacently
+            // blow all the jobs in the overall checker
+            Job bigJob = EventManager.addToPriorityQueue(stageList, EventManager.timeNow());
+            currentTime = bigJob.getCurrentTime();
             
-
-            EventManager.performProduction(stageList, EventManager.timeNow());
-            System.out.println();
-
             System.out.println();
 
             /*

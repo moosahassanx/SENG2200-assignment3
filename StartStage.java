@@ -14,6 +14,8 @@ public class StartStage extends Stage{
 
     private int numberOfItems;
 
+    private double processingTime;
+
     private InterstageStorage nextQueue;
 
     // default constructor
@@ -61,6 +63,7 @@ public class StartStage extends Stage{
             double d = r.nextDouble();
             double processingTime = mean + range * (d - 0.5);
             System.out.println("processingTime: " + processingTime);
+            setProcessingTime(processingTime);
     
             // print data onto item
             car.addData(name, processingTime);

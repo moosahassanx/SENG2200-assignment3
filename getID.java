@@ -1,7 +1,7 @@
 import java.util.Random;
 
-// Java program implementing Singleton class with getInstance() method 
-public class getID{ 
+// Java program implementing Singleton class with getInstance() method
+public class getID{
     /*
     // static variable single_instance of type Singleton 
     private static getID single_instance = null; 

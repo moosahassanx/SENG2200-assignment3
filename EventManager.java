@@ -8,54 +8,40 @@ public class EventManager {
 	
 	private double time;
 
-	private PriorityQueue<Job> PJ;
+	private PriorityQueue<Job> PQ;
 
     // constructor
     public EventManager(){
 		currentTime = 0;
-		PJ = new PriorityQueue<Job>();
+		PQ = new PriorityQueue<Job>();
 	}
 
-	// the first items created by S0a and S0b are created simultaneously
-	// whenever the items have been processed and the next queue is not blocked - transfer to next queue storage
-	// s1 pulls the item and processes it
+	public Job addToPriorityQueue(ArrayList<Stage> stageList, double timeNow){
+		Job firstJob = new Job();
+		Job secondJob = new Job();
 
-	public Stage performProduction(ArrayList<Stage> stageList, double timeNow){
+		// make a new job
+		if(timeNow == 0){
+			firstJob = new Job(timeNow, stageList.get(0));
+			secondJob = new Job(timeNow, stageList.get(1));
+			System.out.println("current stage: " + firstJob.getCurrentStage().getName());
 
-		for(Stage s : stageList){
-			Stage tempStage = s.getPrev();
-		}
-		
-		
-
-		System.out.println("Stage: " + stageList.getName());
-		stageList.processItem(timeNow);			// only call when job is complete
-
-		// check for adjacent stages
-		stageList.processAdjacent();
-
-		Job nextJob = PJ.poll();			// printing the top element and removing it (GeeksForGeeks))
-
-		System.out.println("current stage: " + nextJob.getCurrentStage().getName());
-		
-		// gives you the stage
-		
-		/*
-		System.out.println("getremainingDuration(): " + nextJob.getRemainingDuration());
-
-		currentTime = nextJob.getRemainingDuration();
-
-		for(Job j : JobQueue){
-			j.updateRemainingDuration(nextJob.getRemainingDuration());
+			PQ.offer(firstJob);
+			System.out.println("firstJob offered");
 		}
 
-		nextJob.finishJob(currentTime);
-		*/
-		
-		return nextJob.getCurrentStage();
+		// processing it and doing stuff
+		else{
+			firstJob.getCurrentStage().processItem(timeNow);
+			currentTime += firstJob.getCurrentStage().getProcessingTime();
+		}
+
+		Job nextJob = PQ.poll();									// printing the top element and removing it (GeeksForGeeks))
+
+		// actual discrete simulation lol
+
+		return nextJob;
 	}
-
-
 
 	public double timeNow() {
 		return currentTime;
