@@ -47,14 +47,12 @@ public class FinishStage extends Stage{
         if(getCurrentState() == -1){
             // case: there are no items to process
             if(prevQueue.isEmpty() == true){
-                System.out.println("there are no items to be processed");
+                // System.out.println("there are no items to be processed");
             }
 
             // case: there are items to be processed
             else{
                 Item car = prevQueue.outputItem();
-                // itemArray[numberOfItems] = car;
-                // numberOfItems++;
                 System.out.println(car.getName() + " has been finalised.");
                 tempItem = car;
 
@@ -74,6 +72,7 @@ public class FinishStage extends Stage{
 
             // case: theres items
             else{
+                // process the item
                 tempItem = prevQueue.outputItem();
             }
         }
@@ -85,7 +84,7 @@ public class FinishStage extends Stage{
     }
 
     public String toString(){
-        String printer = "";  
+        String printer = "";
 
         //      stage name          work[%]              starve[t]           block[t]
         printer += name + "\t\t" + getWork() + "\t\t" + getStarve() + "\t" + getBlock() + "\n";

@@ -42,12 +42,12 @@ public class MiddleStage extends Stage{
     }
 
     public void processItem(double currentTime){
-        // System.out.println(name + " processItem()");
+        System.out.println(name + " processItem()");
 
         // case: stage is starved
         if(getCurrentState() == -1){
             if(prevQueue.isEmpty() == false){
-                // pull item
+                // pull item from previous queue
                 tempItem = prevQueue.outputItem();
 
                 if(nextQueue.isFull()){

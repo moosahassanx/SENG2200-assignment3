@@ -46,7 +46,7 @@ public class StartStage extends Stage{
     }
 
     public void processItem(double currentTime){
-        // System.out.println(name + " processItem() loaded.");
+        System.out.println(name + " processItem() loaded.");
 
         // case: stage is currently starved
         if(getCurrentState() == -1){

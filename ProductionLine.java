@@ -153,7 +153,7 @@ public class ProductionLine {
             currentTime = bigJob.getCurrentTime();
         }
 
-        System.out.println("complete");
+        // System.out.println("complete");
     }
 
     public String toString(){

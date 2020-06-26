@@ -48,7 +48,7 @@ public class InterstageStorage {
     }
 
     public boolean inputItem(Item inputCar){
-        System.out.println("inputting " + inputCar.getName() + " in " + name);
+        // System.out.println("inputting " + inputCar.getName() + " in " + name);
 
         // storage is full
         if(isFull() == true){
