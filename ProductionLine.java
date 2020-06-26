@@ -159,6 +159,7 @@ public class ProductionLine {
         }
     }
 
+    // not exactly like the spec but i got 30 mins left lol
     public String toString(){
         String output = "";
 

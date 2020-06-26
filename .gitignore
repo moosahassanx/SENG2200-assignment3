@@ -15,3 +15,7 @@ Stage.class
 InterstageStorage.class
 InterstageStorage.class
 Item.class
+InterstageStorage.class
+*.class
+ProductionLine.java
+Stage.class
