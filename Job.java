@@ -22,6 +22,7 @@ public class Job implements Comparable<Job>{
         currentStage.processItem(t);
     }
 
+    // note to self: use only after comparing
     public Stage getCurrentStage(){
         return currentStage;
     }

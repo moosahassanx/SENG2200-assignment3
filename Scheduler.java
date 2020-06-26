@@ -9,7 +9,6 @@ import java.util.PriorityQueue;
 
 public class Scheduler {
 	private double currentTime;
-	
 	private PriorityQueue<Job> PQ;
 
     // constructor

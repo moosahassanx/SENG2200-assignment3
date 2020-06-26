@@ -69,7 +69,7 @@ public class MiddleStage extends Stage{
                 tempItem.addData(name, processingTime);
                 
                 // push
-                nextQueue.inputItem(tempItem, currentTime + processingTime);
+                nextQueue.inputItem(tempItem, currentTime);     // changed here
 
                 // check if prev storage be empty
                 if(prevQueue.isEmpty()){
@@ -81,7 +81,7 @@ public class MiddleStage extends Stage{
                 // prev storage is not empty
                 else{
                     // pull item from previous queue
-                    tempItem = prevQueue.outputItem(currentTime + processingTime);
+                    tempItem = prevQueue.outputItem(currentTime);       // changed here
 
                     // updating state
                     setCurrentState(0, currentTime);

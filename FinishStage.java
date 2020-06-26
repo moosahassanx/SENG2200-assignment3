@@ -1,3 +1,5 @@
+import java.util.Random;
+
 // TITLE: 					Assignment3
 // COURSE: 					SENG2200
 // AUTHOR: 					Moosa Hassan
@@ -8,11 +10,15 @@ public class FinishStage extends Stage{
     private String name;
     private Item tempItem;
     private InterstageStorage prevQueue;
+    private double mean;
+    private double range;
 
     // main constructor
     public FinishStage(String n, int m, int r, InterstageStorage before) {
         super(n);
 
+        mean = m;
+        range = r;
         name = n;
         prevQueue = before;
         setCurrentState(-1, 0);
@@ -49,6 +55,15 @@ public class FinishStage extends Stage{
         // case: stage is busy
         else if(getCurrentState() == 0){
             // System.out.println(name + " is busy.");
+
+            // processing the temp item
+            Random r = new Random();
+            double d = r.nextDouble();
+            double processingTime = mean + range * (d - 0.5);
+            setProcessingTime(processingTime);
+
+            // print data onto item
+            tempItem.addData(name, processingTime);
 
             // "push"
             // item was produced by S0a
@@ -107,10 +122,7 @@ public class FinishStage extends Stage{
 
     public String toString() {
         String printer = "";  
-
-        //      stage name            work[%]                  starve[t]               block[t]
         printer += name + "\t\t" + getWorkLoad() + "%\t\t" + getStarveTime() + "  \t" + getBlockTime() + "\n";
-
         return printer;
     }
 }

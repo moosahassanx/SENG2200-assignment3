@@ -1,29 +1,25 @@
 // TITLE: 					Assignment3
-// COURSE: 					SENG2200
-// AUTHOR: 					Moosa Hassan
-// STUDENT NUMBER: 			3331532
-// DATE: 					26/06/2020
-// DESCRIPTION: 			place for items to be stored for temporarily. allows for stages to pull and
-//                          push items from here
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class InterstageStorage {
     private String name;
-    private double averageItems;
     private int Qmax;
     private Queue<Item> carArray;
     private Queue<Double> carData;
     private double duration;
-    private double itemCount;
+    private int itemCount;
+    private ArrayList<Integer> averageArray;
 
     public InterstageStorage(String n, int q) {
         name = n;
-        averageItems = 0;
         Qmax = q;
         new LinkedList<Integer>();
         carArray = new LinkedList<Item>();
         carData = new LinkedList<Double>();
+        averageArray = new ArrayList<Integer>();
+        itemCount = 0;
     }
 
     public String getName(){
@@ -64,6 +60,7 @@ public class InterstageStorage {
         // theres room
         else{
             carArray.add(inputCar);
+            updateItemAverage(carArray.size());
             carData.add(d);
             return true;
         }
@@ -75,15 +72,21 @@ public class InterstageStorage {
         if(car != null){
             double timeEntered = carData.poll();
             double duration = d - timeEntered;
-            itemCount++;
+            // itemCount++;
+            updateItemAverage(carArray.size());
             concatenateDuration(duration);
         }
 
         return car;
     }
 
-    public void concatenateDuration(double d){
+    private void updateItemAverage(int i) {
+        averageArray.add(i);
+    }
+
+    public void concatenateDuration(double d) {
         duration += d;
+        itemCount++;
     }
 
     public String calcAverage(){
@@ -94,27 +97,27 @@ public class InterstageStorage {
     // a. the average time an item spends in each queue
     public double averageTime(){
         double time;
-
         time = 0.1;
-
         return time;
     }
 
-    // b. the average number of items in the queue at any time (this statistic will require some thought).
-    public int averageItems(){
-        int numberOfItems;
+    // b. the average number of items in the queue at any time
+    public String averageItems() {
+        double total = 0;
 
-        numberOfItems = 4;
+        for(int i = 0; i < averageArray.size(); i++){
+            total += averageArray.get(i);
+        }
 
-        return numberOfItems;
+        double average = total / averageArray.size();
+
+        return String.format("%4.2f", average);
     }
 
-    // fake output
+    // output
     public String toString(){
         String output = "";
-
-        output += name + " \t" + calcAverage() + " \t" + averageItems + "\n";
-
+        output += name + " \t" + calcAverage() + " \t" + averageItems() + "\n";
         return output;
     }
 }

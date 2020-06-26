@@ -14,15 +14,12 @@ public class ProductionLine {
     private int averageTime;
     private int timeRange;
     private int Qmax;
-
     private ArrayList<Stage> stageList;
     private ArrayList<InterstageStorage> interstageStorageList;
     private InterstageStorage Q01, Q12, Q23, Q34, Q45, Q56;
     private Stage S0b, S3a, S3b, S5a, S5b;                          // 2M, 2N
     private Stage S0a, S1, S2, S4, S6;                              // 1M, 1N
-
     private double timeLimit = 10000000;
-
     private Scheduler Scheduler;
 
     public ProductionLine(int m, int n, int qMax) {
@@ -35,10 +32,12 @@ public class ProductionLine {
     }
 
     public void run() {
+        /*
         System.out.println("M: " + averageTime);
         System.out.println("N: " + timeRange);
         System.out.println("Qmax: " + Qmax);
         System.out.println();
+        */
 
         // making queues
         Q01 = new InterstageStorage("Q01", Qmax);

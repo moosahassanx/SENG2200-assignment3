@@ -11,7 +11,6 @@ public class StartStage extends Stage{
     private String branding;
     private int mean;
     private int range;
-
     private Item tempItem;
     private InterstageStorage nextQueue;
 

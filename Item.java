@@ -10,7 +10,7 @@ public class Item {
     private int count;
 
     public Item(String AorB) {
-        dataArray = new Data[6];
+        dataArray = new Data[7];
         count = 0;
 
         getID generateID = new getID();
@@ -56,6 +56,12 @@ public class Item {
 
         if(dataArray[5] == null){
             dataArray[5] = new Data(name, processingTime);
+            count++;
+            return;
+        }
+
+        if(dataArray[6] == null){
+            dataArray[6] = new Data(name, processingTime);
             count++;
             return;
         }

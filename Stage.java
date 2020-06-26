@@ -12,25 +12,19 @@ public abstract class Stage {
     private double processingTime;
     private String name;
     private InterstageStorage nextQueue;
-
     private ArrayList<Stage> nextStage;
     private ArrayList<Stage> prevStage;
-
     private double starveTime;
     private double blockTime;
     private double workLoad;
     private double busyTime;
-
     private int aBrands;
     private int bBrands;
-
     private int S3atoS5a;
     private int S3atoS5b;
     private int S3btoS5a;
     private int S3btoS5b;
-
     private int currentState;
-
     private double lastUpdate;
 
     // main constructor
