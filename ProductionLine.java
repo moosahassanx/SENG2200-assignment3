@@ -17,6 +17,9 @@ public class ProductionLine {
     private Stage S0b, S3a, S3b, S5a, S5b;                          // 2M, 2N
     private Stage S0a, S1, S2, S4, S6;                              // 1M, 1N
 
+    private int aBrandItems;
+    private int bBrandItems;
+
     private double currentTime;
     private double timeLimit = 10000000;
 
@@ -30,6 +33,8 @@ public class ProductionLine {
         interstageStorageList = new ArrayList<InterstageStorage>();
         new PriorityQueue<Job>();
         currentTime = 0;
+        aBrandItems = 0;
+        bBrandItems = 0;
     }
 
     public void run(){
@@ -129,6 +134,10 @@ public class ProductionLine {
             if(bigJob.getCurrentStage().getCurrentState() == 0){
                 Scheduler.addToPriorityQueue(bigJob.getCurrentStage(), bigJob.getCurrentStage().getProcessingTime());
             }
+
+            else{
+                continue;
+            }
             
             // System.out.println("MANAGING: " + bigJob.getCurrentStage().getName());
 
@@ -174,7 +183,7 @@ public class ProductionLine {
         
 
         output += "Storage Queues:\n----------------------------------------------------\n";
-        output += "Store\t\tAvgTime[t]\t\tAvgItems\n";
+        output += "Store\t\tAvgTime[t]       \t\tAvgItems\n";
         output += Q01.toString();
         output += Q12.toString();
         output += Q23.toString();
@@ -184,15 +193,15 @@ public class ProductionLine {
         output += "\n\n";
 
         output += "Production Paths:\n------------------\n";
-        output += "S3a -> S5a: " + "NEED TODO THIS \n";
-        output += "S3a -> S5b: " + "NEED TODO THIS \n";
-        output += "S3b -> S5a: " + "NEED TODO THIS \n";
-        output += "S3b -> S5b: " + "NEED TODO THIS \n";
+        output += "S3a -> S5a: " + S6.getS3atoS5a() + "\n";
+        output += "S3a -> S5b: " + S6.getS3atoS5b() + "\n";
+        output += "S3b -> S5a: " + S6.getS3btoS5a() + "\n";
+        output += "S3b -> S5b: " + S6.getS3btoS5b() + "\n";
         output += "\n\n";
 
         output += "Production Items:\n------------------\n";
-        output += "S0a: " + "NEED TODO THIS \n";
-        output += "S0b: " + "NEED TODO THIS \n";
+        output += "S0a: " + S6.getABrands() + "\n";
+        output += "S0b: " + S6.getBBrands() + "\n";
 
         return output;
     }

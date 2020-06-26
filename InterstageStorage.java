@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -8,17 +9,19 @@ public class InterstageStorage {
     private double averageItems;
     private int Qmax;
     private Queue<Item> carArray;
+    private Queue<Double> carData;
 
-    private int count;
-    
+    private double duration;
+    private double itemCount;
+
     public InterstageStorage(String n, int q) {
         name = n;
         averageTime = 0;
         averageItems = 0;
         Qmax = q;
         new LinkedList<Integer>();
-        count = 0;
         carArray = new LinkedList<Item>();
+        carData = new LinkedList<Double>();
     }
 
     public String getName(){
@@ -27,7 +30,7 @@ public class InterstageStorage {
 
     public boolean isFull(){
         // interstage storage is full
-        if(count == 7) {
+        if(carArray.size() == Qmax) {
             return true;
         }
 
@@ -38,16 +41,17 @@ public class InterstageStorage {
     }
 
     public boolean isEmpty(){
-        if(count == 0){
+        if(carArray.size() == 0){
             return true;
         }
 
         else{
+            // System.out.println(name + " is not empty");
             return false;
         }
     }
 
-    public boolean inputItem(Item inputCar){
+    public boolean inputItem(Item inputCar, double d){
         // System.out.println("inputting " + inputCar.getName() + " in " + name);
 
         // storage is full
@@ -58,15 +62,33 @@ public class InterstageStorage {
         // theres room
         else{
             carArray.add(inputCar);
+            carData.add(d);
             return true;
         }
     }
 
-    public Item outputItem(){
-        return carArray.poll();
+    public Item outputItem(double d){
+        Item car = carArray.poll();
+
+        if(car != null){
+            double timeEntered = carData.poll();
+            double duration = d - timeEntered;
+            itemCount++;
+            concatenateDuration(duration);
+        }
+
+        return car;
     }
 
-    // TODO: a. the average time an item spends in each queue 
+    public void concatenateDuration(double d){
+        duration += d;
+    }
+
+    public double calcAverage(){
+        return duration / itemCount;
+    }
+
+    // TODO: a. the average time an item spends in each queue
     public double averageTime(){
         double time;
 
@@ -88,7 +110,7 @@ public class InterstageStorage {
     public String toString(){
         String output = "";
 
-        output += name + "\t\t" + averageTime + "\t\t\t" + averageItems + "\n";
+        output += name + "\t\t" + calcAverage() + "          \t" + averageItems + "\n";
 
         return output;
     }

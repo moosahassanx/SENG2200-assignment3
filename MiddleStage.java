@@ -15,15 +15,10 @@ public class MiddleStage extends Stage{
     private InterstageStorage nextQueue;
     private InterstageStorage prevQueue;
 
-    // default constructor
-    public MiddleStage(){
-        timeStart = 0;
-        timeFinish = 0;
-        name = "";
-    }
-
     // main constructor
     public MiddleStage(String n, int m, int r, InterstageStorage after, InterstageStorage before){
+        super(n);
+
         name = n;
         mean = m;
         range = r;
@@ -42,13 +37,13 @@ public class MiddleStage extends Stage{
     }
 
     public void processItem(double currentTime){
-        System.out.println(name + " processItem()");
+        // System.out.println(name + " processItem()");
 
         // case: stage is starved
         if(getCurrentState() == -1){
             if(prevQueue.isEmpty() == false){
-                // pull item from previous queue
-                tempItem = prevQueue.outputItem();
+                // pull item
+                tempItem = prevQueue.outputItem(currentTime);
 
                 if(nextQueue.isFull()){
                     // blocked
@@ -70,16 +65,28 @@ public class MiddleStage extends Stage{
             }
 
             else{
+                // process item - P = M + N x (d - 0.5)
+                Random r = new Random();
+                double d = r.nextDouble();
+                double processingTime = mean + range * (d - 0.5);
+                // System.out.println("processingTime: " + processingTime);
+                setProcessingTime(processingTime);
+
+                // print data onto item
+                tempItem.addData(name, processingTime);
+                
                 // push
-                nextQueue.inputItem(tempItem);
+                nextQueue.inputItem(tempItem, currentTime + processingTime);
 
                 // check if prev storage be empty
                 if(prevQueue.isEmpty()){
                     setCurrentState(-1);
                 }
 
+                // prev storage is not empty
                 else{
-                    tempItem = prevQueue.outputItem();
+                    // pull item from previous queue
+                    tempItem = prevQueue.outputItem(currentTime + processingTime);
 
                     // set stage as busy
                     setCurrentState(0);
@@ -91,27 +98,9 @@ public class MiddleStage extends Stage{
     public String toString(){
         String printer = "";  
 
-        //      stage name          work[%]              starve[t]           block[t]
-        printer += name + "\t\t" + getWork() + "\t\t" + getStarve() + "\t" + getBlock() + "\n";
+        //      stage name           work[%]                    starve[t]              block[t]
+        printer += name + "\t\t" + getWorkLoad() + "%\t\t" + getStarveTime() + "      \t" + getBlockTime() + "\n";
 
         return printer;
-    }
-
-    public String getWork(){
-        String work = "00.00%";
-
-        return work;
-    }
-
-    public String getStarve(){
-        String starve = "0,000.00";
-
-        return starve;
-    }
-
-    public String getBlock(){
-        String block = "00,000.00";
-
-        return block;
     }
 }

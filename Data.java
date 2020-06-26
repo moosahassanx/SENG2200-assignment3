@@ -8,11 +8,18 @@ public class Data {
         stageName = s;
     }
 
-    // accessors
-    public String getName(){
-        return stageName;
+    // mutators
+    public void setStageName(String s){
+        stageName = s;
+    }
+    public void setProcessingTime(double p){
+        processingTime = p;
     }
 
+    // accessors
+    public String getStageName(){
+        return stageName;
+    }
     public double getProcessingTime(){
         return processingTime;
     }

@@ -18,16 +18,10 @@ public class StartStage extends Stage{
 
     private InterstageStorage nextQueue;
 
-    // default constructor
-    public StartStage(){
-        timeStart = 0;
-        timeFinish = 0;
-        name = "";
-        setCurrentState(-1);
-    }
-
     // main constructor
     public StartStage(String n, int m, int r, InterstageStorage q, String b){
+        super(n);
+
         name = n;
         mean = m;
         range = r;
@@ -46,7 +40,7 @@ public class StartStage extends Stage{
     }
 
     public void processItem(double currentTime){
-        System.out.println(name + " processItem() loaded.");
+        // System.out.println(name + " processItem() loaded.");
 
         // case: stage is currently starved
         if(getCurrentState() == -1){
@@ -85,7 +79,7 @@ public class StartStage extends Stage{
             else{
                 // System.out.println(nextQueue.getName() + " has room");
                 // insert the stage stored item into the next interstage storage
-                nextQueue.inputItem(tempItem);
+                nextQueue.inputItem(tempItem, currentTime);
 
                 // stage is now busy
                 setCurrentState(0);
@@ -118,27 +112,9 @@ public class StartStage extends Stage{
     public String toString(){
         String printer = "";  
 
-        //      stage name          work[%]              starve[t]           block[t]
-        printer += name + "\t\t" + getWork() + "\t\t" + getStarve() + "\t" + getBlock() + "\n";
+        //      stage name            work[%]                  starve[t]                block[t]
+        printer += name + "\t\t" + getWorkLoad() + "%\t\t" + getStarveTime() + "      \t" + getBlockTime() + "\n";
 
         return printer;
-    }
-
-    public String getWork(){
-        String work = "00.00%";
-
-        return work;
-    }
-
-    public String getStarve(){
-        String starve = "0,000.00";
-
-        return starve;
-    }
-
-    public String getBlock(){
-        String block = "00,000.00";
-
-        return block;
     }
 }
