@@ -1,11 +1,16 @@
+// TITLE: 					Assignment3
+// COURSE: 					SENG2200
+// AUTHOR: 					Moosa Hassan
+// STUDENT NUMBER: 			3331532
+// DATE: 					26/06/2020
+// DESCRIPTION: 			an instance of a job is created using the scheduler. compares other jobs
+//                          created by the scheduler using comparable
 public class Job implements Comparable<Job>{
     private double duration;
-    private double finishTime;
     private Stage currentStage;
 
     public Job() {
         duration = 0;
-        finishTime = 0;
     }
 
     public Job(double timeNow, Stage s) {
@@ -29,17 +34,17 @@ public class Job implements Comparable<Job>{
     @Override
     public int compareTo(Job o) {
         
-        // this finishTime < input finishTime
-        if(this.finishTime < o.finishTime){
+        // this duration < input duration
+        if(this.duration < o.duration){
             return -1;
         }
 
-        // this finishTime == input finishTime
-        if(this.finishTime == o.finishTime){
+        // this duration == input duration
+        if(this.duration == o.duration){
             return 0;
         }
 
-        // this finishTime > input finishTime
+        // this duration > input duration
         else{
             return 1;
         }

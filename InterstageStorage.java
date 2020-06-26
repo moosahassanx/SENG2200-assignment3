@@ -1,22 +1,24 @@
-import java.util.ArrayList;
+// TITLE: 					Assignment3
+// COURSE: 					SENG2200
+// AUTHOR: 					Moosa Hassan
+// STUDENT NUMBER: 			3331532
+// DATE: 					26/06/2020
+// DESCRIPTION: 			place for items to be stored for temporarily. allows for stages to pull and
+//                          push items from here
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class InterstageStorage {
     private String name;
-    private double averageTime;
     private double averageItems;
     private int Qmax;
     private Queue<Item> carArray;
     private Queue<Double> carData;
-
     private double duration;
     private double itemCount;
 
     public InterstageStorage(String n, int q) {
         name = n;
-        averageTime = 0;
         averageItems = 0;
         Qmax = q;
         new LinkedList<Integer>();
@@ -88,7 +90,7 @@ public class InterstageStorage {
         return duration / itemCount;
     }
 
-    // TODO: a. the average time an item spends in each queue
+    // a. the average time an item spends in each queue
     public double averageTime(){
         double time;
 
@@ -97,7 +99,7 @@ public class InterstageStorage {
         return time;
     }
 
-    // TODO: b. the average number of items in the queue at any time (this statistic will require some thought).
+    // b. the average number of items in the queue at any time (this statistic will require some thought).
     public int averageItems(){
         int numberOfItems;
 

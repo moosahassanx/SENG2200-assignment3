@@ -1,32 +1,21 @@
-import java.util.LinkedList;
-import java.util.List;
-
+// TITLE: 					Assignment3
+// COURSE: 					SENG2200
+// AUTHOR: 					Moosa Hassan
+// STUDENT NUMBER: 			3331532
+// DATE: 					26/06/2020
+// DESCRIPTION: 			polymorphic extension of stage, finalises items
 public class FinishStage extends Stage{
-    private double timeStart;
-    private double timeFinish;
     private String name;
-    private int mean;
-    private int range;
-
-    private Item[] itemArray;
-    private int numberOfItems;
     private Item tempItem;
-
-    InterstageStorage prevQueue;
-
-    private String nextQueue;
+    private InterstageStorage prevQueue;
 
     // main constructor
-    public FinishStage(String n, int m, int r, InterstageStorage before){
+    public FinishStage(String n, int m, int r, InterstageStorage before) {
         super(n);
 
         name = n;
-        mean = m;
-        range = r;
         prevQueue = before;
-        itemArray = new Item[10000];
-        numberOfItems = 0;
-        setCurrentState(-1);
+        setCurrentState(-1, 0);
     }
 
     public void setName(String n){
@@ -42,7 +31,7 @@ public class FinishStage extends Stage{
         if(getCurrentState() == -1){
             // case: there are no items to process
             if(prevQueue.isEmpty() == true){
-                // System.out.println("there are no items to be processed");
+                // stage is still starving so do nothing
             }
 
             // case: there are items to be processed
@@ -53,7 +42,7 @@ public class FinishStage extends Stage{
                 tempItem = car;
 
                 // set stage as busy
-                setCurrentState(0);
+                setCurrentState(0, currentTime);
             }
         }
 
@@ -62,8 +51,6 @@ public class FinishStage extends Stage{
             // System.out.println(name + " is busy.");
 
             // "push"
-            // System.out.println(tempItem.getName() + " needs to be stored somewhere: " + tempItem.getName().charAt(10));
-
             // item was produced by S0a
             if(tempItem.getName().charAt(10) == 'a'){
                 countABrands();
@@ -72,9 +59,6 @@ public class FinishStage extends Stage{
             else{
                 countBBrands();
             }
-
-            // System.out.println(tempItem.getData(3).getStageName());
-            // System.out.println(tempItem.getData(5).getStageName());
 
             // S3a
             if(tempItem.getData(3).getStageName() == "S3a"){
@@ -88,7 +72,6 @@ public class FinishStage extends Stage{
                     addS3atoS5b();
                 }
             }
-
             // S3b
             if(tempItem.getData(3).getStageName() == "S3b"){
                 // S3b to S5a
@@ -105,18 +88,15 @@ public class FinishStage extends Stage{
             // destroy item
             tempItem = null;
 
-            // check if prev storage be empty
             if(prevQueue.isEmpty() == true){
-                setCurrentState(-1);
+                // updating state
+                setCurrentState(-1, currentTime);
             }
 
-            // case: theres items
             else{
-                // "process" the item as a final product
                 tempItem = prevQueue.outputItem(currentTime);
-
-                // System.out.println(tempItem.getName() + " needs to be stored somewhere");
-            }
+                setCurrentState(0, currentTime);
+            }            
         }
 
         // case: stage is blocked

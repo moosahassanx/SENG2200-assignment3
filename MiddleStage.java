@@ -1,17 +1,16 @@
-import java.util.LinkedList;
-import java.util.List;
+// TITLE: 					Assignment3
+// COURSE: 					SENG2200
+// AUTHOR: 					Moosa Hassan
+// STUDENT NUMBER: 			3331532
+// DATE: 					26/06/2020
+// DESCRIPTION: 			polymorphic extension of stage, mainly pulls and pushes items
 import java.util.Random;
 
 public class MiddleStage extends Stage{
-    private double timeStart;
-    private double timeFinish;
     private String name;
     private int mean;
     private int range;
-
     private Item tempItem;
-    private int numberOfItems;
-
     private InterstageStorage nextQueue;
     private InterstageStorage prevQueue;
 
@@ -26,7 +25,7 @@ public class MiddleStage extends Stage{
         nextQueue = after;
         prevQueue = before;
 
-        setCurrentState(-1);        // set starved from the start
+        setCurrentState(-1, 0);        // set starved from the start
     }
 
     public void setName(String n){
@@ -45,23 +44,17 @@ public class MiddleStage extends Stage{
                 // pull item
                 tempItem = prevQueue.outputItem(currentTime);
 
-                if(nextQueue.isFull()){
-                    // blocked
-                    setCurrentState(1);
-                }
-
-                else{
-                    // busy
-                    setCurrentState(0);
-                }
+                // updating state
+                setCurrentState(0, currentTime);
             }
         }
 
         // busy or blocked
         else if(getCurrentState() == 0 || getCurrentState() == 1){
             if(nextQueue.isFull()){
-                // stage is blocked
-                setCurrentState(1);
+
+                // updating state
+                setCurrentState(1, currentTime);
             }
 
             else{
@@ -80,7 +73,9 @@ public class MiddleStage extends Stage{
 
                 // check if prev storage be empty
                 if(prevQueue.isEmpty()){
-                    setCurrentState(-1);
+
+                    // updating state
+                    setCurrentState(-1, currentTime);                    
                 }
 
                 // prev storage is not empty
@@ -88,8 +83,8 @@ public class MiddleStage extends Stage{
                     // pull item from previous queue
                     tempItem = prevQueue.outputItem(currentTime + processingTime);
 
-                    // set stage as busy
-                    setCurrentState(0);
+                    // updating state
+                    setCurrentState(0, currentTime);
                 }
             }
         }        

@@ -1,17 +1,16 @@
-import java.util.ArrayList;
-import java.util.Queue;
-
+// TITLE: 					Assignment3
+// COURSE: 					SENG2200
+// AUTHOR: 					Moosa Hassan
+// STUDENT NUMBER: 			3331532
+// DATE: 					26/06/2020
+// DESCRIPTION: 			the actual item bring processed
 public class Item {
     private String uniqueID;
     private Data[] dataArray;
-    private InterstorageData[] queueArray;
-    private ArrayList interstageDataQueue;
     private int count;
 
     public Item(String AorB) {
         dataArray = new Data[6];
-        queueArray = new InterstorageData[6];
-        interstageDataQueue = new ArrayList();
         count = 0;
 
         getID generateID = new getID();

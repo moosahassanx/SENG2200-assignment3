@@ -1,6 +1,11 @@
+// TITLE: 					Assignment3
+// COURSE: 					SENG2200
+// AUTHOR: 					Moosa Hassan
+// STUDENT NUMBER: 			3331532
+// DATE: 					26/06/2020
+// DESCRIPTION: 			mainly used for processing items and temporarily store items depending on
+//                          the current state of the stage
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 public abstract class Stage {
@@ -14,6 +19,7 @@ public abstract class Stage {
     private double starveTime;
     private double blockTime;
     private double workLoad;
+    private double busyTime;
 
     private int aBrands;
     private int bBrands;
@@ -24,6 +30,8 @@ public abstract class Stage {
     private int S3btoS5b;
 
     private int currentState;
+
+    private double lastUpdate;
 
     // main constructor
     public Stage(String n){
@@ -42,6 +50,8 @@ public abstract class Stage {
         starveTime = 0;
         blockTime = 0;
         workLoad = 0;
+        busyTime = 0;
+        lastUpdate = 0;
     }
 
     // modifiers for stats
@@ -51,19 +61,20 @@ public abstract class Stage {
     public void addBlockTime(double addedTime){
         blockTime += addedTime;
     }
-    public void calculateWorkLoad(double w){        // still trynna figure out how im supposed to go about this lol
-        workLoad += w;
+    public void addBusyTime(double addedTime){
+        busyTime += addedTime;
     }
 
     // getters for stats
-    public double getStarveTime(){
-        return starveTime;
+    public String getStarveTime() {
+        return String.format("%4.2f", starveTime);
     }
-    public double getBlockTime(){
+    public double getBlockTime() {
         return blockTime;
     }
-    public double getWorkLoad(){
-        return workLoad;
+    public String getWorkLoad(){
+        workLoad = busyTime / (starveTime+blockTime+busyTime);
+        return String.format("%4.2f", workLoad*100);
     }
 
     public double getProcessingTime(){
@@ -73,11 +84,36 @@ public abstract class Stage {
         processingTime = p;
     }
 
-    public void setCurrentState(int s){
+    public void setCurrentState(int s, double currentTime){
         // -1: starve
         //  0: busy
         //  1: blocked
-        currentState = s;
+        if(currentState == s){
+            return;
+        }
+
+        else{
+            double difference = currentTime - lastUpdate;
+
+            if(difference < 0){
+                System.out.println("yo difference is negative");
+            }
+            
+            if(currentState == -1){
+                addStarveTime(difference);
+            }
+
+            else if(currentState == 0){
+                addBusyTime(difference);
+            }
+
+            else{
+                addBlockTime(difference);
+            }
+
+            currentState = s;
+            lastUpdate = currentTime;
+        }
     }
 
     public int getCurrentState(){
@@ -97,15 +133,6 @@ public abstract class Stage {
     }
 
     public abstract void processItem(double currentTime);
-    
-    // fake toString() method
-    public String toString(){
-        String printer = "";  
-
-        printer += name + "\t\t" + "0%" + "\t\t" + "00000.00" + "\t" + "00000.00" + "\n";
-
-        return printer;
-    }
 
     // linked list controlling
     public void setNext(Stage after){
@@ -145,7 +172,7 @@ public abstract class Stage {
         return processingTime;
     }
 
-    // TODO: 5. You will also keep a total number of items created by S0a and S0b that arrive at the end of the line.
+    // 5. You will also keep a total number of items created by S0a and S0b that arrive at the end of the line.
     protected void countABrands() {
         aBrands++;
     }
@@ -160,7 +187,7 @@ public abstract class Stage {
         return bBrands;
     }
 
-    // TODO: 6. Lastly, you will keep a total of the number of items that followed each path through Stage 3a/b and Stage 5a/b, that arrive at the end of the line
+    // 6. Lastly, you will keep a total of the number of items that followed each path through Stage 3a/b and Stage 5a/b, that arrive at the end of the line
     // S3a to S5a
     public void addS3atoS5a(){
         S3atoS5a++;

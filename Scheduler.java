@@ -1,3 +1,10 @@
+// TITLE: 					Assignment3
+// COURSE: 					SENG2200
+// AUTHOR: 					Moosa Hassan
+// STUDENT NUMBER: 			3331532
+// DATE: 					26/06/2020
+// DESCRIPTION: 			main part of the discrete simulation, keeps track of time and which jobs should be performed
+// 							across each stage.
 import java.util.PriorityQueue;
 
 public class Scheduler {

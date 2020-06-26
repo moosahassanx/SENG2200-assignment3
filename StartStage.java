@@ -1,21 +1,18 @@
-import java.util.LinkedList;
-import java.util.List;
+// TITLE: 					Assignment3
+// COURSE: 					SENG2200
+// AUTHOR: 					Moosa Hassan
+// STUDENT NUMBER: 			3331532
+// DATE: 					26/06/2020
+// DESCRIPTION: 			polymorphic extension of stage, generates items constantly and pushes it
 import java.util.Random;
 
 public class StartStage extends Stage{
-    private double timeStart;
-    private double timeFinish;
     private String name;
     private String branding;
     private int mean;
     private int range;
 
     private Item tempItem;
-
-    private int numberOfItems;
-
-    private double processingTime;
-
     private InterstageStorage nextQueue;
 
     // main constructor
@@ -27,7 +24,7 @@ public class StartStage extends Stage{
         range = r;
 
         nextQueue = q;
-        setCurrentState(-1);       // set as starved
+        setCurrentState(-1, 0);       // set as starved
         branding = b;
     }
 
@@ -44,19 +41,13 @@ public class StartStage extends Stage{
 
         // case: stage is currently starved
         if(getCurrentState() == -1){
-
-            // stage is now busy
-            setCurrentState(0);
-
             // produce an item
             Item car = new Item(branding);
-            // System.out.println("starting new car production: " + car.getName());
 
             // process item - P = M + N x (d - 0.5)
             Random r = new Random();
             double d = r.nextDouble();
             double processingTime = mean + range * (d - 0.5);
-            // System.out.println("processingTime: " + processingTime);
             setProcessingTime(processingTime);
     
             // print data onto item
@@ -64,25 +55,22 @@ public class StartStage extends Stage{
     
             // temporarily store it within the stage for later use
             tempItem = car;
+
+            // stage is now busy
+            setCurrentState(0, currentTime);
         }
 
         // case: the stage is currently busy or blocked
         else if(getCurrentState() == 0 || getCurrentState() == 1){
             // case: the next storage is full
             if(nextQueue.isFull() == true){
-                // System.out.println(nextQueue.getName() + " is full");
-                // set the stage as blocked
-                setCurrentState(1);
+                setCurrentState(1, currentTime);
             }
 
             // case: theres room in the next interstage storage
             else{
-                // System.out.println(nextQueue.getName() + " has room");
                 // insert the stage stored item into the next interstage storage
                 nextQueue.inputItem(tempItem, currentTime);
-
-                // stage is now busy
-                setCurrentState(0);
 
                 // produce an item
                 Item car = new Item(branding);
@@ -100,6 +88,9 @@ public class StartStage extends Stage{
         
                 // temporarily store it within the stage for later use
                 tempItem = car;
+                
+                // updating state
+                setCurrentState(0, currentTime);
             }
         }
     }
@@ -112,8 +103,8 @@ public class StartStage extends Stage{
     public String toString(){
         String printer = "";  
 
-        //      stage name            work[%]                  starve[t]                block[t]
-        printer += name + "\t\t" + getWorkLoad() + "%\t\t" + getStarveTime() + "      \t" + getBlockTime() + "\n";
+        //      stage name            work[%]                  starve[t]                        block[t]
+        printer += name + "\t\t" + getWorkLoad() + "%\t\t" + getStarveTime() + "        \t\t" + getBlockTime() + "\n";
 
         return printer;
     }
