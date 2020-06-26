@@ -104,7 +104,7 @@ public class StartStage extends Stage{
         String printer = "";  
 
         //      stage name            work[%]                  starve[t]                        block[t]
-        printer += name + "\t\t" + getWorkLoad() + "%\t\t" + getStarveTime() + "        \t\t" + getBlockTime() + "\n";
+        printer += name + "\t\t" + getWorkLoad() + "%\t\t" + getStarveTime() + "\t\t" + getBlockTime() + "\n";
 
         return printer;
     }

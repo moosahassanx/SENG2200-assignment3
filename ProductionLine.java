@@ -164,7 +164,7 @@ public class ProductionLine {
         String output = "";
 
         output += "Production Stations:\n---------------------------------------------------------\n";
-        output += "Stage\t\tWork[%]\t\tStarve[t]\t\tBlock[t]\n";
+        output += "Stage\t\tWork[%]\t\tStarve[t]\tBlock[t]\n";
         output += S0a.toString();
         output += S0b.toString();
         output += S1.toString();
@@ -179,7 +179,7 @@ public class ProductionLine {
         
 
         output += "Storage Queues:\n----------------------------------------------------\n";
-        output += "Store\t\tAvgTime[t]       \t\tAvgItems\n";
+        output += "Store \tAvgTime[t] \tAvgItems\n";
         output += Q01.toString();
         output += Q12.toString();
         output += Q23.toString();

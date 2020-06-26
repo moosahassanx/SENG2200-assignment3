@@ -86,8 +86,9 @@ public class InterstageStorage {
         duration += d;
     }
 
-    public double calcAverage(){
-        return duration / itemCount;
+    public String calcAverage(){
+        double average = duration / itemCount;
+        return String.format("%4.2f", average);
     }
 
     // a. the average time an item spends in each queue
@@ -112,7 +113,7 @@ public class InterstageStorage {
     public String toString(){
         String output = "";
 
-        output += name + "\t\t" + calcAverage() + "          \t" + averageItems + "\n";
+        output += name + " \t" + calcAverage() + " \t" + averageItems + "\n";
 
         return output;
     }

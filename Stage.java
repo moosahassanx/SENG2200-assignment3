@@ -69,8 +69,8 @@ public abstract class Stage {
     public String getStarveTime() {
         return String.format("%4.2f", starveTime);
     }
-    public double getBlockTime() {
-        return blockTime;
+    public String getBlockTime() {
+        return String.format("%4.2f", blockTime);
     }
     public String getWorkLoad(){
         workLoad = busyTime / (starveTime+blockTime+busyTime);
